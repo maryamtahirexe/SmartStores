@@ -35,7 +35,7 @@ const AuthCheck = () => {
       const token = Cookies.get('token') || localStorage.getItem('token');
       if (!token) {
         dispatch(logout());
-        navigate('/'); // Redirect to login page
+        navigate('/'); // Redirect to login page hi my name is jhadsfka
       }
     };
 
