@@ -2,7 +2,7 @@ import Owner from "../models/owner.js";
 
 export const createOwner = async (req, res) => {
   const { name, email, password } = req.body;
-
+  console.log("Request Body:", req.body);
   try {
     if (!name || !email || !password) {
       return res

@@ -13,7 +13,7 @@ export const API = axios.create({
 export const login = ({ email, password }) =>  API.post('/auth/login', { email, password });
 
 API.interceptors.request.use((config) => {
-  const token = Cookies.get('token');
+  const token = Cookies.get('token') || localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

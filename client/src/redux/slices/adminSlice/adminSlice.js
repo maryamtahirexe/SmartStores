@@ -8,12 +8,16 @@ import Cookies from 'js-cookie';
 export const loginAdmin = createAsyncThunk('admin/loginAdmin', async ({ email, password }, { rejectWithValue }) => {
   try {
     const response = await login({ email, password });
+    const token = response.data.token;
+  localStorage.setItem('token', token);
+  Cookies.set('token', token);
     console.log(response.data.token);
     Cookies.set('token', response.data.token);
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
     }
     // Store token in cookies
+
     return response.data;
   } catch (error) {
     console.error('Error response:', error.response.data);

@@ -39,7 +39,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li className="mb-4">
-            <Link to="/owners" className="flex items-center text-white hover:text-purple-300">
+            <Link to="/dashboard/owner" className="flex items-center text-white hover:text-purple-300">
               Owners
             </Link>
           </li>

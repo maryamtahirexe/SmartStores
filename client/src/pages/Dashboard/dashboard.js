@@ -2,13 +2,26 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchStoresWithOwners } from '../../redux/slices/adminSlice/adminSlice';
 import Card from '../../components/card/Card';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { logout } from '../../redux/slices/auth/authSlice';
+
 
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const stores = useSelector((state) => state.admin.stores);
   const status = useSelector((state) => state.admin.storesStatus);
   const error = useSelector((state) => state.admin.storesError);
+
+  useEffect(() => {
+    const token = Cookies.get('token') || localStorage.getItem('token');
+    if (!token) {
+      dispatch(logout());
+      navigate('/'); 
+    }
+  }, [dispatch, navigate]);
 
   useEffect(() => {
     if (status === 'idle') {
