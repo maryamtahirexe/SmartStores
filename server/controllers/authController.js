@@ -22,7 +22,7 @@
 //   } else {
 //     res.status(401).json({ message: "Invalid credentials" });
 //   }
-// };
+// }; hi mmy name is sehuiasjk
 
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
