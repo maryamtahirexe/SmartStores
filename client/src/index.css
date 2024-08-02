@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* index.css */
+.toggle-checkbox:checked {
+  right: 0;
+  border-color: #4caf50;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #4caf50;
+}
