@@ -1,18 +1,45 @@
+
+// correct one 
 import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-const ProtectedRoute = ({ element: Component, ...rest }) => {
-  const token = localStorage.getItem('token'); // Check token in localStorage
-
-  return (
-    <Route
-      {...rest}
-      element={token ? Component : <Navigate to="/" />}
-    />
-  );
+const PrivateRoute = ({ element }) => {
+  const token = Cookies.get('token') || localStorage.getItem('token');
+  
+  if (!token) {
+    return <Navigate to="/" replace />;
+  }
+  
+  return element;
 };
 
-export default ProtectedRoute;
+export default PrivateRoute;
+
+
+
+// src/components/PrivateRoute.js
+// import React from 'react';
+// import { Route, Navigate } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
+// import Cookies from 'js-cookie';
+
+// const PrivateRoute = ({ element: Element, ...rest }) => {
+//   const token = Cookies.get('token') || localStorage.getItem('token');
+  
+//   return (
+//     <Route
+//       {...rest}
+//       element={token ? Element : <Navigate to="/" />}
+//     />
+//   );
+// };
+
+// export default PrivateRoute;
+
+
+
+
 
 // import { useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';

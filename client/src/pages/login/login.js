@@ -74,6 +74,8 @@
 
 // export default Login;
 
+//changed
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -134,7 +136,7 @@ const Login = () => {
     <div className="min-h-screen flex">
       <div className="w-1/2 bg-primary flex flex-col justify-center items-center">
         <img src={logo} alt="Logo" className="w-1/3 mb-4" />
-        <h1 className="text-3xl font-bold text-highlight">Welcome Back</h1>
+        <h1 className="text-3xl font-bold text-highlight">Texinity Technologies</h1>
       </div>
       <div className="w-1/2 bg-primary flex flex-col justify-center items-center">
         <h2 className="text-2xl font-bold text-highlight mb-6">Login</h2>

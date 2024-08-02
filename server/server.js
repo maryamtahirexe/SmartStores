@@ -5,12 +5,14 @@ import dotenv from "dotenv";
 import storeRouter from "./routes/storeRoutes.js";
 import ownerRouter from "./routes/ownerRoutes.js";
 import authRouter from "./routes/authRoutes.js"; 
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
 const app = express();
 
 // Middleware
+app.use(cookieParser());
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors({
