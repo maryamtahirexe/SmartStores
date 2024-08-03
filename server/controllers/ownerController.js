@@ -1,4 +1,5 @@
 import Owner from "../models/owner.js";
+import Store from "../models/store.js";
 
 export const createOwner = async (req, res) => {
   const { name, email, password } = req.body;
@@ -75,5 +76,29 @@ export const updateOwner = async (req, res) => {
     res
       .status(500)
       .json({ message: "Failed to update owner", error: error.message });
+  }
+};
+export const getOwnersByStoreId = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Find the store by ID
+    const store = await Store.findById(id).populate('owners');
+
+    if (!store) {
+      return res.status(404).json({ message: "Store not found" });
+    }
+
+    // The owners field in the store object will already be populated
+    const owners = store.owners;
+
+    if (owners.length === 0) {
+      return res.status(404).json({ message: "No owners found for this store" });
+    }
+
+    res.status(200).json(owners);
+  } catch (error) {
+    console.error("Error fetching owners by store ID:", error);
+    res.status(500).json({ message: "Failed to get owners", error: error.message });
   }
 };

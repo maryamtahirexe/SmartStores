@@ -1,20 +1,19 @@
 import React from 'react';
-import Navbar from './navbar';
 import Sidebar from './sidebar';
 import { Outlet } from 'react-router-dom';
 
 const Layout = () => {
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="flex-1 ml-64">
-        <Navbar />
-        <main className="p-6">
-        <Outlet /> 
-        </main>
+    <div className="grid grid-cols-6 min-h-screen">
+      <div className="col-span-1">
+        <Sidebar />
       </div>
+      <main className="col-span-5 p-6">
+        <Outlet />
+      </main>
     </div>
   );
 };
 
 export default Layout;
+

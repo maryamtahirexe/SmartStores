@@ -14,7 +14,7 @@ const router = express.Router();
 router.get('/with-owners', getStoresWithOwners);
 router.post('/stores', auth, createStore);
 router.patch('/:id', auth, updateStore);
-router.get('/:id', auth, getStoreById);
+router.get('/:id', getStoreById);
 router.get('/', getAllStores);
 router.delete('/:id', auth, deleteStore);
 
