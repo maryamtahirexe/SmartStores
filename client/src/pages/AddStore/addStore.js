@@ -153,53 +153,57 @@ const AddStore = () => {
     key: owner._id, // Use the owner's ID as the key
     name: owner.name, // Display value
   }));
-
   return (
-    <>
-      <h1 className="text-3xl">Add Store</h1>
-
-      <form className="w-3/4 max-w-sm" onSubmit={handleSubmit}>
-        <InputField
-          label="Name"
-          type="text"
-          id="name"
-          placeholder="Enter store name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-        <InputField
-          label="Location"
-          type="text"
-          id="location"
-          placeholder="Enter store location"
-          value={formData.location}
-          onChange={handleChange}
-          required
-        />
-
-        <div className="mt-4">
-          <label
-            htmlFor="owners"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Owner
-          </label>
-          <Multiselect
-            displayValue="name" // Display the owner's name
-            onKeyPressFn={function noRefCheck() {}}
-            onRemove={function noRefCheck() {}}
-            onSearch={function noRefCheck() {}}
-            onSelect={handleSelectChange}
-            options={formattedOwners}
+    <div className="min-h-screen flex items-center justify-center ">
+      <div className="w-full max-w-md p-8 bg-primary rounded-lg shadow-lg">
+        <h1 className="text-3xl text-highlight mb-6 text-center">Add Store</h1>
+        <form className="w-full" onSubmit={handleSubmit}>
+          <InputField
+            label="Name"
+            type="text"
+            id="name"
+            placeholder="Enter store name"
+            value={formData.name}
+            onChange={handleChange}
+            required
           />
-        </div>
+          <InputField
+            label="Location"
+            type="text"
+            id="location"
+            placeholder="Enter store location"
+            value={formData.location}
+            onChange={handleChange}
+            required
+          />
 
-        <div className="mt-6">
-          <Button text="Add Store" type="submit" />
-        </div>
-      </form>
-    </>
+          <div className="mt-4">
+            <label
+              htmlFor="owners"
+              className="block text-sm font-medium text-highlight"
+            >
+              Owner
+            </label>
+            <Multiselect
+              displayValue="name" // Display the owner's name
+              onKeyPressFn={function noRefCheck() {}}
+              onRemove={function noRefCheck() {}}
+              onSearch={function noRefCheck() {}}
+              onSelect={handleSelectChange}
+              options={formattedOwners}
+              style={{
+                chips: { background: '#efc55f' },
+                searchBox: { border: '1px solid #317879' },
+              }}
+            />
+          </div>
+
+          <div className="mt-6">
+            <Button text="Add Store" type="submit" bgColor="#efc55f" textColor="#191343" />
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 

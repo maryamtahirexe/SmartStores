@@ -2,11 +2,11 @@
 
 // const Card = ({ storeName, storeLocation, owners }) => {
 //   return (
-//     <div className="bg-white shadow-2xl rounded-lg p-6 hover:shadow-purple-950 transition-shadow duration-300 border border-purple-950">
-//       <h2 className="text-2xl font-bold mb-2 text-purple-950">{storeName}</h2>
+//     <div className="bg-white shadow-2xl rounded-lg p-6 hover:shadow-primary-950 transition-shadow duration-300 border border-primary-950">
+//       <h2 className="text-2xl font-bold mb-2 text-primary-950">{storeName}</h2>
 //       <p className="text-gray-500 mb-4">Location: {storeLocation}</p>
 //       <div className="mt-4">
-//         <h3 className="font-semibold mb-2 text-purple-950">Owners:</h3>
+//         <h3 className="font-semibold mb-2 text-primary-950">Owners:</h3>
 //         <ul className="pl-4 text-gray-700 list-none">
 //           {owners.map((owner) => (
 //             <li key={owner.id} className="mb-2">
@@ -14,7 +14,7 @@
 //                 {owner.name} (
 //                 <a
 //                   href={`mailto:${owner.email}`}
-//                   className="text-purple-950 hover:text-purple-700 transition-colors duration-300"
+//                   className="text-primary-950 hover:text-primary-700 transition-colors duration-300"
 //                 >
 //                   {owner.email}
 //                 </a>)
@@ -33,10 +33,9 @@ import { useDispatch } from "react-redux";
 import { deleteStore } from "../../redux/slices/adminSlice/adminSlice";
 import { useNavigate } from "react-router-dom";
 
-const Card = ({ storeId, storeName, storeLocation, owners  }) => {
+const Card = ({ storeId, storeName, storeLocation, owners }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
 
   const handleDelete = async () => {
     try {
@@ -52,18 +51,21 @@ const Card = ({ storeId, storeName, storeLocation, owners  }) => {
   };
 
   return (
-    <div className="bg-white shadow-2xl rounded-lg p-6 hover:shadow-purple-950 transition-shadow duration-300 border border-purple-950">
+    <div className="bg-transparent shadow-2xl rounded-lg p-6 hover:shadow-primary transition-shadow duration-300 border border-primary">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold mb-2 text-purple-950">{storeName}</h2>
+        <h2 className="text-2xl font-bold mb-1 text-primary">{storeName}</h2>
         <div className="flex space-x-2">
-          <button onClick={() => navigate(`/dashboard/edit-store/${storeId}`)} aria-label="Edit">
+          <button
+            onClick={() => navigate(`/dashboard/edit-store/${storeId}`)}
+            aria-label="Edit"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="w-6 h-6 text-purple-950 hover:text-purple-700 transition-colors duration-300"
+              className="w-6 h-6 text-primary hover:text-highlight transition-colors duration-300"
             >
               <path
                 strokeLinecap="round"
@@ -79,7 +81,7 @@ const Card = ({ storeId, storeName, storeLocation, owners  }) => {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="w-6 h-6 text-purple-950 hover:text-purple-700 transition-colors duration-300"
+              className="w-6 h-6 text-primary hover:text-highlight transition-colors duration-300"
             >
               <path
                 strokeLinecap="round"
@@ -90,17 +92,17 @@ const Card = ({ storeId, storeName, storeLocation, owners  }) => {
           </button>
         </div>
       </div>
-      <p className="text-gray-500 mb-4">Location: {storeLocation}</p>
+      <p className="text-accent text-base mb-4">Location: {storeLocation}</p>
       <div className="mt-4">
-        <h3 className="font-semibold mb-2 text-purple-950">Owners:</h3>
-        <ul className="pl-4 text-gray-700 list-none">
+        <h3 className="font-semibold text-lg  text-primary">Owners:</h3>
+        <ul className="text-accent list-none">
           {owners.map((owner) => (
-            <li key={owner.id} className="mb-2">
+            <li key={owner.id} className="mb-1 text-base">
               <p>
                 {owner.name} (
                 <a
                   href={`mailto:${owner.email}`}
-                  className="text-purple-950 hover:text-purple-700 transition-colors duration-300"
+                  className="text-accent  hover:text-primary transition-colors duration-300"
                 >
                   {owner.email}
                 </a>

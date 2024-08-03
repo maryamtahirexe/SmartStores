@@ -1,20 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      fontFamily: {
-      sans: ['Poppins', 'sans-serif'],
+      backgroundImage: {
+        'login-bg': "url('/src/images/bg.jpg')",
+      },
+      colors: {
+        primary: "#191343",
+        highlight: "#efc55f",
+        highlightHover: "#f5c145",
+        accent: "#317879",
+      },
     },
-    colors: {
-      primary: '#110626',
-      highlight: '#e5a830',
-      accent: '#317879',
-    },
-  },
   },
   plugins: [],
-}
-
+};

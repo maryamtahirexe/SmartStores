@@ -1,85 +1,6 @@
-// import React, { useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useNavigate } from 'react-router-dom'; // Import useNavigate
-// import InputField from '../../components/inputField/inputField';
-// import Button from '../../components/Button/button';
-// import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
-// import logo from '../../images/logo.png';
-// import loginAdmin from '../../redux/slices/adminSlice/adminSlice.js';
-
-// const Login = () => {
-//   const [role, setRole] = useState('Admin');
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate(); // Instantiate useNavigate
-//   const { token, error, loading } = useSelector((state) => state.admin);
-
-//   const toggleRole = () => {
-//     setRole(role === 'Admin' ? 'Store Owner' : 'Admin');
-//   };
-
-//   // const handleSubmit = async (e) => {
-//   //   e.preventDefault();
-//   //   await dispatch(loginAdmin({ email, password }))
-//   //   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const resultAction = await dispatch(loginAdmin({ email, password }));
-//       console.log('Dispatch result:', resultAction); // Log resultAction for debugging
-//       if (loginAdmin.fulfilled.match(resultAction)) {
-//         navigate('/dashboard');
-//       } else {
-//         console.error('Error payload:', resultAction.payload); // Log error payload
-//       }
-//     } catch (error) {
-//       console.error('Error during login:', error);
-//     }
-//   };
-
-
-
-//   return (
-//     <div className="min-h-screen flex">
-//       <div className="w-1/2 bg-primary flex flex-col justify-center items-center">
-//         <img src={logo} alt="Logo" className="w-1/3 mb-4" />
-//         <h1 className="text-3xl font-bold text-highlight">Welcome Back</h1>
-//       </div>
-//       <div className="w-1/2 bg-primary flex flex-col justify-center items-center">
-//         <h2 className="text-2xl font-bold text-highlight mb-6">Login</h2>
-//         <div className="mb-4">
-//           <ToggleSwitch
-//             isChecked={role === 'Store Owner'}
-//             onToggle={toggleRole}
-//             label1="Admin"
-//             label2="Store Owner"
-//           />
-//         </div>
-//         <form className="w-3/4 max-w-sm" onSubmit={handleSubmit}>
-//           <InputField label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-//           <InputField label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-//           {error && <p className="text-red-500">{error}</p>}
-//           <div className="mt-6">
-//             <Button text="Login" bgColor="#e5a830" textColor="#110626" />
-//           </div>
-//           {loading && <p>Loading...</p>}
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Login;
-
-//changed
-
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 import InputField from '../../components/inputField/inputField';
 import Button from '../../components/Button/button';
 import logo from '../../images/logo.png';
@@ -131,46 +52,43 @@ const Login = () => {
     }
   };
   
-
   return (
-    <div className="min-h-screen flex">
-      <div className="w-1/2 bg-primary flex flex-col justify-center items-center">
-        <img src={logo} alt="Logo" className="w-1/3 mb-4" />
-        <h1 className="text-3xl font-bold text-highlight">Texinity Technologies</h1>
-      </div>
-      <div className="w-1/2 bg-primary flex flex-col justify-center items-center">
-        <h2 className="text-2xl font-bold text-highlight mb-6">Login</h2>
-        
-        <form className="w-3/4 max-w-sm" onSubmit={handleSignIn}>
-          <InputField
-            label="Email"
-            type="email"
-            id="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          <InputField
-            label="Password"
-            type="password"
-            id="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-
-          {error && <p className="text-red-500">{error}</p>}
-          <div className="mt-6">
-            <Button
-              text={loading ? 'Logging In...' : 'Login'}
-              bgColor="#e5a830"
-              textColor="#110626"
-              disabled={loading}
+    <div className="bg-login-bg min-h-screen flex">
+      <div className="flex flex-col lg:flex-row w-full">
+        <div className="w-full lg:w-1/2  flex flex-col justify-center items-center p-4 lg:p-12">
+          <img src={logo} alt="Logo" className="w-1/3 mb-4" />
+          <h1 className="text-3xl font-bold text-highlight">TEXINITY TECHNOLOGIES</h1>
+        </div>
+        <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-4 lg:p-12">
+          <h2 className="text-2xl text-highlight mb-6">Welcome Back!</h2>
+          <form className="w-full max-w-sm" onSubmit={handleSignIn}>
+            <InputField
+              label="Email"
+              type="email"
+              id="email"
+              placeholder="Enter Email Address"
+              value={formData.email}
+              onChange={handleChange}
+              required
             />
-          </div>
-        </form>
+            <InputField
+              label="Password"
+              type="password"
+              id="password"
+              placeholder="Enter Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            {error && <p className="text-red-500">{error}</p>}
+            <div className="mt-6">
+              <Button
+                text='Login'
+                
+              />
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
