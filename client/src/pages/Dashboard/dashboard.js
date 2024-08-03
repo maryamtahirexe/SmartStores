@@ -45,7 +45,7 @@ const Dashboard = () => {
   console.log("storesssss:", stores);
 
   return (
-    <div>
+    <div className="ml-7">
       <div className="flex">
         <div className="flex bg-slate-300  items-center rounded-lg p-3 m-3 w-4/5">
           <svg
