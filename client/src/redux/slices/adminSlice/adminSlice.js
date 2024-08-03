@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios"; // Ensure axios is imported
+import axios from "axios"; // Ensure axios is imported LALALALAL
 import {
   API,
   deleteStores,
@@ -66,12 +66,26 @@ export const fetchStoreById = createAsyncThunk(
 );
 
 // Thunk for adding a store
+// export const addStore = createAsyncThunk(
+//   "admin/addStore",
+//   async (storeData, { rejectWithValue }) => {
+//     try {
+//       const response = await API.post("/stores/stores", storeData);
+//       console.log("response is", response.data)
+//       return response.data;
+//     } catch (error) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
+// Thunk for adding a store
 export const addStore = createAsyncThunk(
   "admin/addStore",
-  async (storeData, { rejectWithValue }) => {
+  async (storeData, { rejectWithValue, dispatch }) => {
     try {
       const response = await API.post("/stores/stores", storeData);
-      console.log("response is", response.data)
+      // After adding a store, fetch the updated list of stores
+      dispatch(fetchStoresWithOwners());
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -124,11 +138,24 @@ export const fetchOwnersByStoreId = createAsyncThunk(
 // );
 
 // Thunk for updating a store
+// export const updateStore = createAsyncThunk(
+//   "admin/updateStore",
+//   async ({ id, ...storeData }, { rejectWithValue }) => {
+//     try {
+//       const response = await API.patch(`/stores/${id}`, storeData);
+//       return response.data;
+//     } catch (error) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
 export const updateStore = createAsyncThunk(
   "admin/updateStore",
-  async ({ id, ...storeData }, { rejectWithValue }) => {
+  async ({ id, ...storeData }, { rejectWithValue, dispatch }) => {
     try {
       const response = await API.patch(`/stores/${id}`, storeData);
+      // Fetch the updated list of stores after updating a store
+      dispatch(fetchStoresWithOwners());
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -274,6 +301,7 @@ const adminSlice = createSlice({
       })
       .addCase(fetchOwnersByStoreId.pending, (state) => {
         state.ownersStatus = "loading";
+        state.storesError = null;
       })
       .addCase(fetchOwnersByStoreId.fulfilled, (state, action) => {
         state.ownersStatus = "succeeded";
