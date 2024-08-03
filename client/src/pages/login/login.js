@@ -140,14 +140,7 @@ const Login = () => {
       </div>
       <div className="w-1/2 bg-primary flex flex-col justify-center items-center">
         <h2 className="text-2xl font-bold text-highlight mb-6">Login</h2>
-        <div className="mb-4">
-          <ToggleSwitch
-            isChecked={role === 'Store Owner'}
-            onToggle={toggleRole}
-            label1="Admin"
-            label2="Store Owner"
-          />
-        </div>
+        
         <form className="w-3/4 max-w-sm" onSubmit={handleSignIn}>
           <InputField
             label="Email"

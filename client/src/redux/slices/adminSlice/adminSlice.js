@@ -97,6 +97,7 @@ export const fetchOwnersByStoreId = createAsyncThunk(
   async (storeId, { rejectWithValue }) => {
     try{
     const response = await API.get(`/owner/${storeId}`);
+    console.log("ok", response.data);
     return response.data;
   }catch (error){
     return rejectWithValue(error.response.data);

@@ -40,8 +40,12 @@ const Card = ({ storeId, storeName, storeLocation, owners  }) => {
 
   const handleDelete = async () => {
     try {
-      await dispatch(deleteStore(storeId.toString())).unwrap();
-      console.log("Store deleted successfully");
+      if (storeId) {
+        await dispatch(deleteStore(storeId.toString())).unwrap();
+        console.log("Store deleted successfully");
+      } else {
+        console.error("Store ID is undefined");
+      }
     } catch (error) {
       console.error("Failed to delete store:", error);
     }

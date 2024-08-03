@@ -92,7 +92,7 @@ const Dashboard = () => {
   const stores = useSelector((state) => state.admin.stores);
   const status = useSelector((state) => state.admin.storesStatus);
   const error = useSelector((state) => state.admin.storesError);
-
+  
   useEffect(() => {
     const token = Cookies.get("token") || localStorage.getItem("token");
     if (!token) {
@@ -119,6 +119,8 @@ const Dashboard = () => {
     return <div>No stores available.</div>;
   }
 
+  console.log("storesssss:" ,stores);
+ 
   return (
     <div>
       <div className="flex">
@@ -149,8 +151,8 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
         {stores.map((store) => (
           <Card
-            key={store._id} // Ensure the key is unique
-            storeId={store._id} // Pass store ID
+            key={store.id} // Ensure the key is unique
+            storeId={store.id} // Pass store ID
             storeName={store.storeName} // Adjust field names if needed
             storeLocation={store.storeLocation}
             owners={store.owners}
