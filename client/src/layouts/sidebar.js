@@ -28,14 +28,13 @@ const Sidebar = () => {
       <div className="py-6 px-3">
         <div className="flex mb-10">
           <img src={logo} alt="Logo" className="size-16" />
-          <h1 className="text-xl mt-1">Texinity Technologies</h1>
+          <Link to="/dashboard" className="text-xl mt-1">Texinity Technologies</Link>
+          
         </div>
         <ul className="ml-4 flex flex-col text-xl ">
+          
           <li className="mb-4 hover:text-highlightHover">
-            <Link to="/">Inventory</Link>
-          </li>
-          <li className="mb-4 hover:text-highlightHover">
-            <Link to="/stores">Stores</Link>
+            <Link to="/dashboard">Stores</Link>
           </li>
           <li className="mb-4 hover:text-highlightHover">
             <Link to="/dashboard/owner">Owners</Link>

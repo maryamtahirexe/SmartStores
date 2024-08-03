@@ -45,8 +45,8 @@ const Dashboard = () => {
   console.log("storesssss:", stores);
 
   return (
-    <div className="ml-7">
-      <div className="flex">
+    <div className="p-6">
+      <div className="flex ">
         <div className="flex bg-slate-300  items-center rounded-lg p-3 m-3 w-4/5">
           <svg
             className="w-5 h-5 text-gray-400"
@@ -63,7 +63,7 @@ const Dashboard = () => {
           <input
             type="text"
             placeholder="Search..."
-            className="bg-slate-300 ml-2 outline-none"
+            className="bg-slate-300 w-full ml-2 outline-none"
           />
         </div>
         <button
