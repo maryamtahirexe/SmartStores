@@ -152,6 +152,7 @@ export const getStoresWithOwners = async (req, res) => {
     }
 
     const response = stores.map((store) => ({
+      id: store._id,
       storeName: store.name,
       storeLocation: store.location,
       owners: store.owners.map((owner) => ({

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../redux/slices/auth/authSlice';
-import './sidebar.css';
 import Modal from '../components/Modal/Modal'; // Adjust the import path as needed
 
 const Sidebar = () => {
@@ -24,7 +23,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-64 h-full sidebar-gradient text-white fixed flex flex-col justify-between">
+    <div className="w-64 h-full bg-primary sidebar-gradient text-white fixed flex flex-col justify-between">
       <div className="p-6">
         <h1 className="text-3xl font-bold mb-4">Texinity Technologies</h1>
         <ul>
