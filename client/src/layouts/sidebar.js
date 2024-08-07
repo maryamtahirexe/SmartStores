@@ -42,7 +42,6 @@ const Sidebar = () => {
           <li className="mb-4 hover:text-highlightHover">
             <Link to="/dashboard/profile">Profile</Link>
           </li>
-        
         </ul>
       </div>
       <div className="p-6 flex flex-row justify-center ">
