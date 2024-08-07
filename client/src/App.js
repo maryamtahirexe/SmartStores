@@ -9,8 +9,7 @@ import AddStore from './pages/Dashboard/addStore';
 import EditStore from './pages/Dashboard/editStore';
 import AddOwner from './pages/Owners/addOwner';
 import Profile from './pages/profile/profile';
-import ChangeEmail from './pages/profile/updateEmail';
-import ChangePassword from './pages/profile/updatePassword';
+import UpdateEmail from './pages/profile/updateEmail';
 
 
 
@@ -39,10 +38,9 @@ function App() {
           <Route  path="/dashboard/owner" element={<PrivateRoute element={<Owner />} />} />
           <Route  path="/dashboard/create-store" element={<PrivateRoute element={<AddStore />} />} />
           <Route  path="/dashboard/edit-store/:storeId" element={<PrivateRoute element={<EditStore />} />} />
-          <Route  path="/dashboard/create-owner" element={<PrivateRoute element={<AddOwner />} />} />
+          <Route  path="/dashboard/manage-owner" element={<PrivateRoute element={<AddOwner />} />} />
           <Route  path="/dashboard/profile" element={<PrivateRoute element={<Profile/>} />} />
-          <Route  path="/dashboard/updateEmail" element={<PrivateRoute element={<ChangeEmail />} />} />
-          <Route  path="/dashboard/updatePassword" element={<PrivateRoute element={<ChangePassword />} />} />
+          <Route path="/dashboard/profile/updateEmail" element={<PrivateRoute element={<UpdateEmail />} />} />
         </Route>
       </Routes>
     </BrowserRouter>

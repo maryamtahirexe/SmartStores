@@ -1,3 +1,29 @@
+// // import jwt from "jsonwebtoken";
+// // import dotenv from "dotenv";
+
+// // dotenv.config();
+
+// // export const login = (req, res) => {
+// //   const { email, password } = req.body;
+
+// //   console.log("Incoming email:", email);
+// //   console.log("Incoming password:", password);
+// //   console.log("Env email:", process.env.ADMIN_EMAIL);
+// //   console.log("Env password:", process.env.ADMIN_PASSWORD);
+
+// //   if (
+// //     email === process.env.ADMIN_EMAIL &&
+// //     password === process.env.ADMIN_PASSWORD
+// //   ) {
+// //     const token = jwt.sign({ id: "admin" }, process.env.JWT_SECRET, {
+// //       expiresIn: "1h",
+// //     });
+// //     res.status(200).json({ token });
+// //   } else {
+// //     res.status(401).json({ message: "Invalid credentials" });
+// //   }
+// // }; hi mmy name is sehuiasjk
+
 // import jwt from "jsonwebtoken";
 // import dotenv from "dotenv";
 
@@ -27,7 +53,6 @@
 //     res.status(401).json({ message: "Invalid credentials" });
 //   }
 // };
-
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
@@ -100,5 +125,21 @@ export const updateAdmin = async (req, res) => {
     res.status(200).json({ message: "Admin updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+export const getOwner = async (req, res) => {
+  try {
+    const admin = await Admin.findOne(); 
+    if (!admin) {
+      return res.status(404).json({ message: 'Admin not found' });
+    }
+    res.json({
+      email: admin.email,
+      password: admin.password 
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
   }
 };
