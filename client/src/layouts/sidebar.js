@@ -39,6 +39,9 @@ const Sidebar = () => {
           <li className="mb-4 hover:text-highlightHover">
             <Link to="/dashboard/owner">Owners</Link>
           </li>
+          <li className="mb-4 hover:text-highlightHover">
+            <Link to="/dashboard/profile">Profile</Link>
+          </li>
         
         </ul>
       </div>
