@@ -214,6 +214,124 @@
 // };
 
 // export default EditStore;
+// import React, { useEffect, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { useNavigate, useParams } from "react-router-dom";
+// import Multiselect from "multiselect-react-dropdown";
+// import Button from "../../components/Button/button";
+// import InputField from "../../components/inputField/inputField";
+// import { updateStore, fetchStoreById, fetchOwners } from "../../redux/slices/adminSlice/adminSlice";
+// import { RingLoader } from "react-spinners";
+
+// const EditStore = () => {
+//   const { storeId } = useParams();
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     location: "",
+//     ownerIds: [],
+//   });
+
+//   const dispatch = useDispatch();
+//   const navigate = useNavigate();
+
+//   const owners = useSelector((state) => state.admin.owners);
+//   const store = useSelector((state) => state.admin.store);
+//   const updateStoreStatus = useSelector((state) => state.admin.updateStoreStatus);
+//   const updateStoreError = useSelector((state) => state.admin.updateStoreError);
+
+//   useEffect(() => {
+//     dispatch(fetchStoreById(storeId));
+//     dispatch(fetchOwners());
+//   }, [dispatch, storeId]);
+
+//   useEffect(() => {
+//     if (store) {
+//       setFormData({
+//         name: store.name || "",
+//         location: store.location || "",
+//         ownerIds: store.owners.map((owner) => owner._id) || [],
+//       });
+//     }
+//   }, [store]);
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData((prevState) => ({
+//       ...prevState,
+//       [name]: value,
+//     }));
+//   };
+
+//   const handleOwnersChange = (selectedOwners) => {
+//     setFormData((prevState) => ({
+//       ...prevState,
+//       ownerIds: selectedOwners.map((owner) => owner._id),
+//     }));
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     console.log("Form Data to be submitted:", formData);
+//     try {
+//       await dispatch(updateStore({ id: storeId, ...formData })).unwrap();
+//       navigate("/dashboard");
+//     } catch (error) {
+//       console.error("Failed to update store:", error);
+//     }
+//   };
+
+//   const formattedOwners = owners.map((owner) => ({
+//     _id: owner._id,
+//     name: owner.name,
+//   }));
+
+//   if (status === "loading") {
+//     return (
+//       <div className="flex justify-center items-center min-h-screen">
+//         <RingLoader size={60} color="#000000" loading={true} />
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className="flex justify-center items-center min-h-screen">
+//       <form onSubmit={handleSubmit} className="bg-white shadow-2xl p-10 rounded-lg">
+//         <h1 className="text-2xl font-bold mb-6 text-purple-900">Edit Store</h1>
+//         <InputField
+//           label="Store Name"
+//           name="name"
+//           value={formData.name}
+//           onChange={handleChange}
+//         />
+//         <InputField
+//           label="Store Location"
+//           name="location"
+//           value={formData.location}
+//           onChange={handleChange}
+//         />
+//         <div className="mb-4">
+//           <label className="block text-gray-700 text-sm font-bold mb-2">
+//             Owners
+//           </label>
+//           <Multiselect
+//             options={formattedOwners} // Ensure this is correctly populated
+//             selectedValues={formattedOwners.filter((owner) => formData.ownerIds.includes(owner._id))}
+//             onSelect={handleOwnersChange}
+//             onRemove={handleOwnersChange}
+//             displayValue="name"
+//             placeholder="Select owners"
+//           />
+//         </div>
+//         <Button text="Submit" />
+//         {updateStoreStatus === "loading" && <p>Updating...</p>}
+//         {updateStoreStatus === "failed" && <p>Error: {updateStoreError}</p>}
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default EditStore;
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -221,6 +339,7 @@ import Multiselect from "multiselect-react-dropdown";
 import Button from "../../components/Button/button";
 import InputField from "../../components/inputField/inputField";
 import { updateStore, fetchStoreById, fetchOwners } from "../../redux/slices/adminSlice/adminSlice";
+import { RingLoader } from "react-spinners";
 
 const EditStore = () => {
   const { storeId } = useParams();
@@ -235,6 +354,8 @@ const EditStore = () => {
 
   const owners = useSelector((state) => state.admin.owners);
   const store = useSelector((state) => state.admin.store);
+  const ownersStatus = useSelector((state) => state.admin.ownersStatus);
+  const storeStatus = useSelector((state) => state.admin.storeStatus);
   const updateStoreStatus = useSelector((state) => state.admin.updateStoreStatus);
   const updateStoreError = useSelector((state) => state.admin.updateStoreError);
 
@@ -284,6 +405,14 @@ const EditStore = () => {
     name: owner.name,
   }));
 
+  if (ownersStatus === "loading" || storeStatus === "loading") {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <RingLoader size={60} color="#191343" loading={true} />
+      </div>
+    );
+  }
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <form onSubmit={handleSubmit} className="bg-white shadow-2xl p-10 rounded-lg">
@@ -322,4 +451,3 @@ const EditStore = () => {
 };
 
 export default EditStore;
-

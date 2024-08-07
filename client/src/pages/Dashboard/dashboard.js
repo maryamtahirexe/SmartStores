@@ -8,6 +8,7 @@ import Card from "../../components/card/Card";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { logout } from "../../redux/slices/auth/authSlice";
+import { RingLoader } from "react-spinners";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -31,9 +32,12 @@ const Dashboard = () => {
   }, [status, dispatch]);
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <RingLoader size={60} color="#191343" loading={true} />
+      </div>
+    );
   }
-
   if (status === "failed") {
     return <div>Error: {error}</div>;
   }
@@ -85,7 +89,15 @@ const Dashboard = () => {
           />
         ))}
       </div>
+
+
+
+      
     </div>
+
+
+
+
   );
 };
 

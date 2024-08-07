@@ -39,12 +39,7 @@ const Sidebar = () => {
           <li className="mb-4 hover:text-highlightHover">
             <Link to="/dashboard/owner">Owners</Link>
           </li>
-          <li className="mb-4 hover:text-highlightHover">
-            <Link to="/profile">Profile</Link>
-          </li>
-          <li className="mb-4 hover:text-highlightHover">
-            <Link to="/settings">Settings</Link>
-          </li>
+        
         </ul>
       </div>
       <div className="p-6 flex flex-row justify-center ">
