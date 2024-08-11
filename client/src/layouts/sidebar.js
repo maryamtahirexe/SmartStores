@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../redux/slices/auth/authSlice";
-import logo from "../images/logo.png";
+import logo from "../assets/images/logo.png";
 import Modal from "../components/Modal/Modal"; // Adjust the import path as needed
 
 const Sidebar = () => {

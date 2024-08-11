@@ -1,4 +1,3 @@
-
 // import React from "react";
 // import { useDispatch } from "react-redux"; LALALALALALALAL
 // import { deleteStore } from "../../redux/slices/adminSlice/adminSlice";
@@ -93,8 +92,9 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteStore } from "../../redux/slices/adminSlice/adminSlice";
 import { useNavigate } from "react-router-dom";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import Button from "../Button/button";
 
 const Card = ({ storeId, storeName, storeLocation, owners }) => {
   const dispatch = useDispatch();
@@ -109,9 +109,10 @@ const Card = ({ storeId, storeName, storeLocation, owners }) => {
     try {
       if (storeId) {
         await dispatch(deleteStore(storeId.toString())).unwrap();
-        console.log("Store deleted successfully");
+        setPopupMessage("Store deleted successfully");
       } else {
         console.error("Store ID is undefined");
+        setPopupMessage("Failed to delete Store. Please try again.");
       }
     } catch (error) {
       console.error("Failed to delete store:", error);
@@ -183,29 +184,29 @@ const Card = ({ storeId, storeName, storeLocation, owners }) => {
       </div>
 
       {popupMessage && (
-        <Popup open={true} onClose={() => setPopupMessage(null)} closeOnDocumentClick>
-          <div className="popup-content p-4 rounded-lg shadow-lg bg-white">
+        <Popup
+          open={true}
+          onClose={() => setPopupMessage(null)}
+          closeOnDocumentClick
+        >
+          <div className="w-full text-center p-4 rounded-lg shadow-lg">
             {popupMessage}
-            <div className="mt-4 flex justify-around">
-              <button
-                className="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg"
+            <div className="mt-4 gap-x-4 flex justify-around">
+              <Button
+                text="Yes"
                 onClick={confirmDelete}
-              >
-                Yes
-              </button>
-              <button
-                className="text-white bg-gray-500 hover:bg-gray-600 px-4 py-2 rounded-lg"
+              />
+              <Button
+                text="No"
                 onClick={() => setPopupMessage(null)}
-              >
-                No
-              </button>
+              />
             </div>
           </div>
         </Popup>
       )}
+      
     </div>
   );
 };
 
 export default Card;
-

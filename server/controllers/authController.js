@@ -128,6 +128,7 @@ export const updateAdmin = async (req, res) => {
   }
 };
 
+
 export const getOwner = async (req, res) => {
   try {
     const admin = await Admin.findOne(); 
