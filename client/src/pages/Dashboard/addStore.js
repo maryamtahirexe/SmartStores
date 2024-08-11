@@ -594,7 +594,9 @@ const AddStore = () => {
       setPopupMessage("Store created successfully!");
     } catch (error) {
       console.error("Failed to add store:", error);
-      setPopupMessage("Failed to create store.");
+      setPopupMessage(
+        "Some Error Occured while creating the store. Please try again."
+      );
     }
   };
 
@@ -656,24 +658,29 @@ const AddStore = () => {
               onRemove={handleSelectChange}
               onSelect={handleSelectChange}
               options={formattedOwners}
+              className="custom-multiselect"
+              avoidHighlightFirstOption={true}
+              style={{
+                chips: { background: "#efc55f" },
+                searchBox: { border: "1px solid #317879" },
+              }}
             />
           </div>
-          <Button text="Submit" className="mt-4" />
-          <Button text="Close" onClick= {() => navigate("/dashboard")}/>
+          <div className="flex my-4 gap-x-4">
+            <Button text="Add Store" />
+            <Button text="Close" onClick={() => navigate("/dashboard")} />
+          </div>
         </form>
-        {addStoreStatus === "failed" && (
-          <p className="text-red-600 mt-4">{addStoreError}</p>
-        )}
       </div>
       {popupMessage && (
         <Popup open={true} onClose={handlePopupClose} closeOnDocumentClick>
-          <div className="popup-content">
-            <p>{popupMessage}</p>
-    
-            <Button text="OK" onClick={handlePopupClose} />
-            
-            
-          </div>
+          <div className="w-full p-6 text-center">
+              <p className="text-primary mb-4">{popupMessage}</p>
+              <Button
+                text="OK"
+                onClick={handlePopupClose}
+              />
+            </div>
         </Popup>
       )}
     </div>
@@ -681,10 +688,12 @@ const AddStore = () => {
 };
 
 export default AddStore;
-{/* <button
+{
+  /* <button
 type="button"
 onClick={() => navigate("/dashboard")}
 className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-xl"
 >
 &times;
-</button> */}
+</button> */
+}

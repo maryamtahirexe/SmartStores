@@ -505,22 +505,20 @@ const AddOwner = () => {
             value={formData.password}
             onChange={handleChange}
           />
+          <div className="flex my-4 gap-x-4">
           <Button text={editOwner ? "Update Owner" : "Create Owner"} />
           <Button text="Close" onClick= {() => navigate("/dashboard")}/>
+          </div>
         </form>
         {popupMessage && (
-          <Popup open={true} onClose={closePopup} closeOnDocumentClick={false}>
-            <div className={`bg-white p-4 rounded-lg shadow-lg text-center ${popupType === 'success' ? 'bg-green-100' : 'bg-red-100'}`}>
-              <p className={`text-lg ${popupType === 'success' ? 'text-green-800' : 'text-red-800'}`}>{popupMessage}</p>
-              <button
-                className={`mt-4 px-4 py-2 ${popupType === 'success' ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'} text-white rounded-lg`}
-                onClick={closePopup}
-              >
-                Close
-              </button>
+          <Popup open={true} onClose={closePopup} closeOnDocumentClick>
+            <div className="w-full p-6 text-center">
+              <p className="text-primary mb-4">{popupMessage}</p>
+              <Button text="OK" onClick={closePopup} />
             </div>
           </Popup>
         )}
+
       </div>
     </div>
   );

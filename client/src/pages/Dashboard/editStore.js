@@ -100,7 +100,7 @@
 //             Owners
 //           </label>
 //           <Multiselect
-//             options={formattedOwners} 
+//             options={formattedOwners}
 //             selectedValues={formattedOwners.filter((owner) => formData.ownerIds.includes(owner._id))}
 //             onSelect={handleOwnersChange}
 //             onRemove={handleOwnersChange}
@@ -226,7 +226,7 @@
 //             Owners
 //           </label>
 //           <Multiselect
-//             options={formattedOwners} 
+//             options={formattedOwners}
 //             selectedValues={formattedOwners.filter((owner) => formData.ownerIds.includes(owner._id))}
 //             onSelect={handleOwnersChange}
 //             onRemove={handleOwnersChange}
@@ -359,7 +359,7 @@
 //             Owners
 //           </label>
 //           <Multiselect
-//             options={formattedOwners} 
+//             options={formattedOwners}
 //             selectedValues={formattedOwners.filter((owner) => formData.ownerIds.includes(owner._id))}
 //             onSelect={handleOwnersChange}
 //             onRemove={handleOwnersChange}
@@ -390,10 +390,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import Multiselect from "multiselect-react-dropdown";
 import Button from "../../components/Button/button";
 import InputField from "../../components/inputField/inputField";
-import { updateStore, fetchStoreById, fetchOwners } from "../../redux/slices/adminSlice/adminSlice";
+import {
+  updateStore,
+  fetchStoreById,
+  fetchOwners,
+} from "../../redux/slices/adminSlice/adminSlice";
 import { RingLoader } from "react-spinners";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 const EditStore = () => {
   const { storeId } = useParams();
@@ -412,7 +416,9 @@ const EditStore = () => {
   const store = useSelector((state) => state.admin.store);
   const ownersStatus = useSelector((state) => state.admin.ownersStatus);
   const storeStatus = useSelector((state) => state.admin.storeStatus);
-  const updateStoreStatus = useSelector((state) => state.admin.updateStoreStatus);
+  const updateStoreStatus = useSelector(
+    (state) => state.admin.updateStoreStatus
+  );
   const updateStoreError = useSelector((state) => state.admin.updateStoreError);
 
   useEffect(() => {
@@ -475,9 +481,12 @@ const EditStore = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <form onSubmit={handleSubmit} className="bg-primary shadow-2xl p-10 rounded-lg">
-        <h1 className="text-2xl font-bold mb-6 text-purple-900">Edit Store</h1>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full  max-w-md bg-primary shadow-2xl p-10 rounded-lg"
+      >
+        <h1 className="text-3xl text-highlight mb-6 text-center">Edit Store</h1>
         <InputField
           label="Store Name"
           name="name"
@@ -490,21 +499,33 @@ const EditStore = () => {
           value={formData.location}
           onChange={handleChange}
         />
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Owners
+        <div className="mt-4">
+          <label
+            htmlFor="owners"
+            className="block text-sm font-medium text-highlight"
+          >
+            Owner
           </label>
           <Multiselect
-            options={formattedOwners} 
-            selectedValues={formattedOwners.filter((owner) => formData.ownerIds.includes(owner._id))}
+            options={formattedOwners}
+            selectedValues={formattedOwners.filter((owner) =>
+              formData.ownerIds.includes(owner._id)
+            )}
             onSelect={handleOwnersChange}
             onRemove={handleOwnersChange}
             displayValue="name"
-            placeholder="Select owners"
+            className="custom-multiselect"
+            avoidHighlightFirstOption={true}
+            style={{
+              chips: { background: "#efc55f" },
+              searchBox: { border: "1px solid #317879" },
+            }}
           />
         </div>
-        <Button text="Submit" />
-        <Button text="Close" onClick= {() => navigate("/dashboard")}/>
+        <div className="flex my-4 gap-x-4">
+          <Button text="Submit" />
+          <Button text="Close" onClick={() => navigate("/dashboard")} />
+        </div>
         {updateStoreStatus === "loading" && <p>Updating...</p>}
         {updateStoreStatus === "failed" && <p>Error: {updateStoreError}</p>}
       </form>
@@ -521,6 +542,3 @@ const EditStore = () => {
 };
 
 export default EditStore;
-
-
-

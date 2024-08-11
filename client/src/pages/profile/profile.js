@@ -90,8 +90,6 @@
 //   </div>
 // );
 // };
-
-// export default ProfilePage;
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Popup from 'reactjs-popup';
@@ -105,12 +103,10 @@ const ProfilePage = () => {
   const navigate = useNavigate();
 
   const handleUpdate = () => {
-    // Handle the update logic here
     setPopupMessage("Profile updated successfully!");
-    // Simulate update logic
     setTimeout(() => {
       navigate("/profile");
-    }, 2000); // Delay navigation to allow user to see the pop-up
+    }, 2000);
   };
 
   const handleNavigateToUpdateEmail = () => {
@@ -118,23 +114,23 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
-      <div className="w-full max-w-md bg-primary p-8 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center text-highlight">Profile</h2>
+    <div className="p-6 min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
+        <h2 className="text-3xl mb-6 font-bold text-center text-primary">Profile</h2>
         <form>
           <div className="mb-4 flex items-center">
-            <label className="block text-highlight mb-2 w-full" htmlFor="email">Email</label>
+            <label className="block text-primary mb-2 w-full" htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-highlight"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary"
             />
             <button
               type="button"
               onClick={handleNavigateToUpdateEmail}
-              className="ml-4 text-highlight hover:text-highlight transition-colors duration-300"
+              className="ml-4 text-primary hover:text-highlight transition-colors duration-300"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -147,36 +143,36 @@ const ProfilePage = () => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="m16.862 4.487l1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
                 />
               </svg>
             </button>
           </div>
           <div className="mb-4">
-            <label className="block text-highlight mb-2" htmlFor="oldPassword">Old Password</label>
+            <label className="block text-primary mb-2" htmlFor="oldPassword">Old Password</label>
             <input
               type="password"
               id="oldPassword"
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-highlight"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary"
             />
           </div>
           <div className="mb-6">
-            <label className="block text-highlight mb-2" htmlFor="newPassword">New Password</label>
+            <label className="block text-primary mb-2" htmlFor="newPassword">New Password</label>
             <input
               type="password"
               id="newPassword"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-highlight"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary"
             />
           </div>
           <div className="flex justify-between">
             <button
               type="button"
               onClick={handleUpdate}
-              className="bg-highlight text-white px-4 py-2 rounded-md hover:bg-highlight"
+              className="bg-primary text-white px-4 py-2 rounded-md hover:bg-highlight"
             >
               Update
             </button>
@@ -190,8 +186,14 @@ const ProfilePage = () => {
         </form>
         {popupMessage && (
           <Popup open={true} onClose={() => setPopupMessage(null)} closeOnDocumentClick>
-            <div className="popup-content">
-              {popupMessage}
+            <div className="bg-white p-4 rounded-lg shadow-lg text-center">
+              <p className="text-lg">{popupMessage}</p>
+              <button
+                className="mt-4 px-4 py-2 bg-primary hover:bg-highlight text-white rounded-lg"
+                onClick={() => setPopupMessage(null)}
+              >
+                Close
+              </button>
             </div>
           </Popup>
         )}
