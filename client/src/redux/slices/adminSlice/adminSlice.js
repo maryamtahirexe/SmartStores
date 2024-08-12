@@ -1,5 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios"; // Ensure axios is imported LALALALAL
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"; 
 import {
   API,
   deleteStores,
@@ -9,7 +8,6 @@ import {
 } from "../../../utils/api";
 import Cookies from "js-cookie";
 
-// Thunk for admin login
 export const loginAdmin = createAsyncThunk(
   "admin/loginAdmin",
   async ({ email, password }, { rejectWithValue }) => {
@@ -26,7 +24,6 @@ export const loginAdmin = createAsyncThunk(
   }
 );
 
-// Thunk for fetching stores with owners
 export const fetchStoresWithOwners = createAsyncThunk(
   "admin/fetchStoresWithOwners",
   async (_, { rejectWithValue }) => {
@@ -39,7 +36,6 @@ export const fetchStoresWithOwners = createAsyncThunk(
   }
 );
 
-// Thunk for fetching owners
 export const fetchOwners = createAsyncThunk(
   "owners/fetchOwners",
   async (_, { rejectWithValue }) => {
@@ -52,7 +48,6 @@ export const fetchOwners = createAsyncThunk(
   }
 );
 
-// Thunk for fetching store by ID
 export const fetchStoreById = createAsyncThunk(
   "admin/fetchStoreById",
   async (storeId, { rejectWithValue }) => {
@@ -65,26 +60,11 @@ export const fetchStoreById = createAsyncThunk(
   }
 );
 
-// Thunk for adding a store
-// export const addStore = createAsyncThunk(
-//   "admin/addStore",
-//   async (storeData, { rejectWithValue }) => {
-//     try {
-//       const response = await API.post("/stores/stores", storeData);
-//       console.log("response is", response.data)
-//       return response.data;
-//     } catch (error) {
-//       return rejectWithValue(error.response.data);
-//     }
-//   }
-// );
-// Thunk for adding a store
 export const addStore = createAsyncThunk(
   "admin/addStore",
   async (storeData, { rejectWithValue, dispatch }) => {
     try {
       const response = await API.post("/stores/stores", storeData);
-      // After adding a store, fetch the updated list of stores
       dispatch(fetchStoresWithOwners());
       return response.data;
     } catch (error) {
@@ -93,7 +73,7 @@ export const addStore = createAsyncThunk(
   }
 );
 
-// Thunk for deleting a store
+
 export const deleteStore = createAsyncThunk(
   "admin/deleteStore",
   async (storeId, { rejectWithValue }) => {
@@ -119,42 +99,12 @@ export const fetchOwnersByStoreId = createAsyncThunk(
   }
 );
 
-// export const deleteStore = createAsyncThunk(
-//   "admin/deleteStore",
-//   async ({ storeId, token }, { rejectWithValue }) => {
-//     try {
-//       console.log("token arha ha ya nhi? ",token);
-//       const response = await API.delete(`/stores/${storeId}`, {
-//         headers: {
-//           Authorization: `Bearer ${token}`
-//         }
-//       });
-//       console.log("hi:",response.data)
-//       return response.data;
-//     } catch (error) {
-//       return rejectWithValue(error.response.data);
-//     }
-//   }
-// );
-
-// Thunk for updating a store
-// export const updateStore = createAsyncThunk(
-//   "admin/updateStore",
-//   async ({ id, ...storeData }, { rejectWithValue }) => {
-//     try {
-//       const response = await API.patch(`/stores/${id}`, storeData);
-//       return response.data;
-//     } catch (error) {
-//       return rejectWithValue(error.response.data);
-//     }
-//   }
-// );
 export const updateStore = createAsyncThunk(
   "admin/updateStore",
   async ({ id, ...storeData }, { rejectWithValue, dispatch }) => {
     try {
       const response = await API.patch(`/stores/${id}`, storeData);
-      // Fetch the updated list of stores after updating a store
+
       dispatch(fetchStoresWithOwners());
       return response.data;
     } catch (error) {
@@ -188,7 +138,7 @@ const adminSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Handle login
+
       .addCase(loginAdmin.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -203,7 +153,7 @@ const adminSlice = createSlice({
         state.error = action.payload.message;
       })
 
-      // Handle fetching stores with owners
+
       .addCase(fetchStoresWithOwners.pending, (state) => {
         state.storesStatus = "loading";
         state.storesError = null;
@@ -217,7 +167,7 @@ const adminSlice = createSlice({
         state.storesError = action.payload.message;
       })
 
-      // Handle fetching owners
+
       .addCase(fetchOwners.pending, (state) => {
         state.ownersStatus = "loading";
         state.ownersError = null;
@@ -231,7 +181,7 @@ const adminSlice = createSlice({
         state.ownersError = action.payload.message;
       })
 
-      // Handle fetching store by ID
+
       .addCase(fetchStoreById.pending, (state) => {
         state.storeStatus = "loading";
         state.storeError = null;
@@ -245,7 +195,7 @@ const adminSlice = createSlice({
         state.storeError = action.payload.message;
       })
 
-      // Handle adding store
+
       .addCase(addStore.pending, (state) => {
         state.addStoreStatus = "loading";
         state.addStoreError = null;
@@ -254,7 +204,7 @@ const adminSlice = createSlice({
         state.addStoreStatus = "succeeded";
         if (action.payload) {
           console.log("action payload is", action.payload);
-          state.stores.push(action.payload); // Make sure action.payload is not empty
+          state.stores.push(action.payload); 
           state.storeStatus = "idle";
         } else {
           console.warn("Received empty payload from addStore");
@@ -265,7 +215,7 @@ const adminSlice = createSlice({
         state.addStoreError = action.payload.message;
       })
 
-      // Handle deleting store
+
       .addCase(deleteStore.pending, (state) => {
         state.deleteStoreStatus = "loading";
         state.deleteStoreError = null;
@@ -281,7 +231,7 @@ const adminSlice = createSlice({
         state.deleteStoreError = action.payload.message;
       })
 
-      // Handle updating store
+ 
       .addCase(updateStore.pending, (state) => {
         state.updateStoreStatus = "loading";
         state.updateStoreError = null;

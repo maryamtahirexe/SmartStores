@@ -63,33 +63,28 @@ export const updateOwner = async (req, res) => {
 
     if (name) owner.name = name;
     if (email) owner.email = email;
-    if (password) {
-      const hashedPassword = await bcrypt.hash(password, 12);
-      owner.password = hashedPassword;
-    }
+    if (password !== undefined) owner.password = password; 
 
     const updatedOwner = await owner.save();
 
     res.status(200).json(updatedOwner);
   } catch (error) {
     console.error("Error updating owner:", error);
-    res
-      .status(500)
-      .json({ message: "Failed to update owner", error: error.message });
+    res.status(500).json({ message: "Failed to update owner", error: error.message });
   }
 };
+
 export const getOwnersByStoreId = async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Find the store by ID
+  
     const store = await Store.findById(id).populate('owners');
 
     if (!store) {
       return res.status(404).json({ message: "Store not found" });
     }
 
-    // The owners field in the store object will already be populated
     const owners = store.owners;
 
     if (owners.length === 0) {

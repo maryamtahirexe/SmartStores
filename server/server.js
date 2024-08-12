@@ -13,7 +13,6 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
 app.use(cookieParser());
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
@@ -32,7 +31,6 @@ app.use("/owner", ownerRouter);
 const CONNECTION_URL = process.env.CONNECTION_URL;
 const PORT = process.env.PORT || 5000;
 
-// Function to hash the password before saving
 const hashPassword = async (password) => {
   const saltRounds = 10;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
