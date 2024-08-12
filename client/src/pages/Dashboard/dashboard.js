@@ -1,21 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchStoresWithOwners,
-  deleteStore,
+  fetchStoresWithOwners
 } from "../../redux/slices/adminSlice/adminSlice";
 import Card from "../../components/card/Card";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { logout } from "../../redux/slices/auth/authSlice";
 import { RingLoader } from "react-spinners";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import Button from "../../components/Button/button";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   const stores = useSelector((state) => state.admin.stores);
   const status = useSelector((state) => state.admin.storesStatus);
   const error = useSelector((state) => state.admin.storesError);
+  const [popupMessage, setPopupMessage] = useState(null);
+  const [needsRefetch, setNeedsRefetch] = useState(true);
 
   useEffect(() => {
     const token = Cookies.get("token") || localStorage.getItem("token");
@@ -26,10 +31,15 @@ const Dashboard = () => {
   }, [dispatch, navigate]);
 
   useEffect(() => {
-    if (status === "idle") {
+    if (needsRefetch) {
       dispatch(fetchStoresWithOwners());
+      setNeedsRefetch(false);
     }
-  }, [status, dispatch]);
+  }, [needsRefetch, dispatch]);
+
+  useEffect(() => {
+    setNeedsRefetch(true);
+  }, [stores]);
 
   if (status === "loading") {
     return (
@@ -38,15 +48,14 @@ const Dashboard = () => {
       </div>
     );
   }
+
   if (status === "failed") {
     return <div>Error: {error}</div>;
   }
 
-  if (!stores || stores.length === 0) {
-    return <div>No stores available.</div>;
-  }
-
-  console.log("storesssss:", stores);
+  const filteredStores = stores.filter((store) =>
+    store.storeName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="p-6">
@@ -68,6 +77,8 @@ const Dashboard = () => {
             type="text"
             placeholder="Search..."
             className="bg-slate-300 w-full ml-2 outline-none"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
         <button
@@ -78,26 +89,34 @@ const Dashboard = () => {
         </button>
       </div>
       <h1 className="text-3xl mx-4 my-2 font-bold text-primary">Stores</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-        {stores.map((store) => (
-          <Card
-            key={store.id} // Ensure the key is unique
-            storeId={store.id} // Pass store ID
-            storeName={store.storeName} // Adjust field names if needed
-            storeLocation={store.storeLocation}
-            owners={store.owners}
-          />
-        ))}
-      </div>
-
-
-
-      
+      {filteredStores.length === 0 ? (
+        <div className="p-4 text-center">No stores found.</div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+          {filteredStores.map((store) => (
+            <Card
+              key={store.id} 
+              storeId={store.id} 
+              storeName={store.storeName} 
+              storeLocation={store.storeLocation}
+              owners={store.owners}
+            />
+          ))}
+        </div>
+      )}
+      {popupMessage && (
+        <Popup
+          open={true}
+          onClose={() => setPopupMessage(null)}
+          closeOnDocumentClick
+        >
+          <div className="w-full p-6 text-center">
+            <p className="text-primary mb-4">{popupMessage}</p>
+            <Button text="OK" onClick={() => setPopupMessage(null)} />
+          </div>
+        </Popup>
+      )}
     </div>
-
-
-
-
   );
 };
 

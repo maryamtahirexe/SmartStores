@@ -1,26 +1,49 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteStore } from "../../redux/slices/adminSlice/adminSlice";
 import { useNavigate } from "react-router-dom";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import Button from "../Button/button";
 
 const Card = ({ storeId, storeName, storeLocation, owners }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [confirmationPopup, setConfirmationPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
+    setPopupMessage("Are you sure you want to delete this store?");
+    setConfirmationPopup(true);
+  };
+
+  const confirmDelete = async () => {
     try {
       if (storeId) {
         await dispatch(deleteStore(storeId.toString())).unwrap();
-        console.log("Store deleted successfully");
+        setPopupMessage("Store deleted successfully");
+        setShowSuccessPopup(true);
+        
       } else {
         console.error("Store ID is undefined");
+        setPopupMessage("Failed to delete Store. Please try again.");
+        setShowSuccessPopup(true);
       }
     } catch (error) {
       console.error("Failed to delete store:", error);
+      setPopupMessage("Failed to delete Store. Please try again.");
+      setShowSuccessPopup(true);
+    } finally {
+      setConfirmationPopup(false);
     }
   };
 
+  const closePopup = () => {
+    setConfirmationPopup(false);
+    setShowSuccessPopup(false);
+    setPopupMessage("");
+  };
   return (
     <div className="bg-transparent shadow-2xl rounded-lg p-6 hover:shadow-primary transition-shadow duration-300 border border-primary">
       <div className="flex justify-between items-center">
@@ -65,7 +88,10 @@ const Card = ({ storeId, storeName, storeLocation, owners }) => {
       </div>
       <p className="text-accent text-base mb-4">Location: {storeLocation}</p>
       <div className="mt-4">
-        <h3 className="font-semibold text-lg  text-primary">Owners:</h3>
+        <h3 className="font-semibold text-lg text-primary">Owners:</h3>
+        {owners.length === 0 ? (
+          <p className="text-accent">None</p>
+        ) : (
         <ul className="text-accent list-none">
           {owners.map((owner) => (
             <li key={owner.id} className="mb-1 text-base">
@@ -73,7 +99,7 @@ const Card = ({ storeId, storeName, storeLocation, owners }) => {
                 {owner.name} (
                 <a
                   href={`mailto:${owner.email}`}
-                  className="text-accent  hover:text-primary transition-colors duration-300"
+                  className="text-accent hover:text-primary transition-colors duration-300"
                 >
                   {owner.email}
                 </a>
@@ -82,7 +108,31 @@ const Card = ({ storeId, storeName, storeLocation, owners }) => {
             </li>
           ))}
         </ul>
+        )}
       </div>
+
+      {confirmationPopup && (
+        <Popup open={true} onClose={closePopup} closeOnDocumentClick>
+          <div className="w-full text-center p-4 rounded-lg shadow-lg">
+            <p>{popupMessage}</p>
+            <div className="mt-4 gap-x-4 flex justify-around">
+              <Button text="Yes" onClick={confirmDelete} />
+              <Button text="No" onClick={closePopup} />
+            </div>
+          </div>
+        </Popup>
+      )}
+
+      {showSuccessPopup && (
+        <Popup open={true} onClose={closePopup} closeOnDocumentClick>
+          <div className="w-full text-center p-4 rounded-lg shadow-lg">
+            <p>{popupMessage}</p>
+            <div className="mt-4 gap-x-4 flex justify-around">
+              <Button text="OK" onClick={closePopup} />
+            </div>
+          </div>
+        </Popup>
+      )}
     </div>
   );
 };

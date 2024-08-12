@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loginAdmin } from '../adminSlice/adminSlice';
-import Cookies from 'js-cookie'; //changed
+import Cookies from 'js-cookie'; 
 
 const initialState = {
   userId: null,
@@ -17,9 +17,9 @@ const authSlice = createSlice({
       state.userId = null;
       state.token = null;
       localStorage.removeItem('token');
-      Cookies.remove('token');//changed
+      Cookies.remove('token');
     },
-    //changed
+ 
     setUser(state, action) {
       state.userId = action.payload.userId;
       state.token = action.payload.token;

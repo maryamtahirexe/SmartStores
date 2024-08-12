@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../../components/inputField/inputField';
 import Button from '../../components/Button/button';
-import logo from '../../images/logo.png';
+import logo from "../../assets/images/logo.png";
 import { loginAdmin } from '../../redux/slices/adminSlice/adminSlice';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 const Login = () => {
   const [role, setRole] = useState('Admin');
@@ -12,6 +14,7 @@ const Login = () => {
     email: '',
     password: '',
   });
+  const [popupMessage, setPopupMessage] = useState(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,7 +22,7 @@ const Login = () => {
 
   useEffect(() => {
     if (error) {
-      alert(error);
+      setPopupMessage(error);
       if (error === 'Invalid credentials') {
         setFormData({ email: '', password: '' });
       }
@@ -34,7 +37,6 @@ const Login = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
@@ -46,16 +48,20 @@ const Login = () => {
         navigate('/dashboard');
       } else {
         console.error('Error payload:', result.payload);
+        setPopupMessage('Login failed. Please check your credentials.');
       }
     } catch (error) {
       console.error('Error during login:', error);
+      setPopupMessage('An unexpected error occurred.');
     }
   };
-  
+
+  const handlePopupClose = () => setPopupMessage(null);
+
   return (
     <div className="bg-login-bg min-h-screen flex">
       <div className="flex flex-col lg:flex-row w-full">
-        <div className="w-full lg:w-1/2  flex flex-col justify-center items-center p-4 lg:p-12">
+        <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-4 lg:p-12">
           <img src={logo} alt="Logo" className="w-1/3 mb-4" />
           <h1 className="text-3xl font-bold text-highlight">TEXINITY TECHNOLOGIES</h1>
         </div>
@@ -80,16 +86,23 @@ const Login = () => {
               onChange={handleChange}
               required
             />
-            {error && <p className="text-red-500">{error}</p>}
             <div className="mt-6">
-              <Button
-                text='Login'
-                
-              />
+              <Button text='Login' />
             </div>
           </form>
         </div>
       </div>
+      {popupMessage && (
+        <Popup open={true} onClose={handlePopupClose} closeOnDocumentClick>
+          <div className="w-full p-6 text-center">
+            <p className="text-primary mb-4">{popupMessage}</p>
+            <Button
+              text="OK"
+              onClick={handlePopupClose}
+            />
+          </div>
+        </Popup>
+      )}
     </div>
   );
 };
