@@ -11,8 +11,7 @@ const ownerSchema = new mongoose.Schema({
     unique: true,
   },
   password: {
-    type: String,
-    required: true,
+    type: String
   },
 });
 

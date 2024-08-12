@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOwners, deleteOwner } from "../../redux/slices/ownerSlice/ownerSlice";
 import { useNavigate } from "react-router-dom";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import Button from "../../components/Button/button";
+
 
 const Owner = () => {
   const dispatch = useDispatch();
@@ -12,7 +14,8 @@ const Owner = () => {
   const navigate = useNavigate();
   const [popupMessage, setPopupMessage] = useState(null);
   const [ownerToDelete, setOwnerToDelete] = useState(null);
-
+  const [confirmationPopup, setConfirmationPopup] = useState(false);
+  
   useEffect(() => {
     dispatch(fetchOwners());
   }, [dispatch]);
@@ -24,6 +27,7 @@ const Owner = () => {
   const handleDelete = (id) => {
     setOwnerToDelete(id);
     setPopupMessage("Are you sure you want to delete this owner?");
+    setConfirmationPopup(true);
   };
 
   const confirmDelete = async () => {
@@ -31,18 +35,19 @@ const Owner = () => {
       await dispatch(deleteOwner(ownerToDelete)).unwrap();
       setPopupMessage("Owner deleted successfully");
     } catch (error) {
-      setPopupMessage("Failed to delete owner.");
+      setPopupMessage("Failed to delete owner. Please try again.");
     }
-    setOwnerToDelete(null);
+    setConfirmationPopup(false);
   };
 
   const closePopup = () => {
     setPopupMessage(null);
-    if (!ownerToDelete) {
-      dispatch(fetchOwners()); // Refresh the owner list if an owner was deleted
+    if (!confirmationPopup && ownerToDelete) {
+      dispatch(fetchOwners()); 
     }
   };
-const filteredOwners = owners.filter((owner) =>
+
+  const filteredOwners = owners.filter((owner) =>
     owner.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -126,36 +131,33 @@ const filteredOwners = owners.filter((owner) =>
           ))
         )}
       </ul>
-      {popupMessage && (
-        <Popup open={true} onClose={closePopup} closeOnDocumentClick={false}>
-          <div className="bg-white p-4 rounded-lg shadow-lg text-center">
-            <p className="text-lg">{popupMessage}</p>
-            {ownerToDelete ? (
-              <div className="flex justify-center mt-4">
-                <button
-                  className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg mr-2"
-                  onClick={confirmDelete}
-                >
-                  Yes
-                </button>
-                <button
-                  className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg"
-                  onClick={() => {
-                    setPopupMessage(null);
-                    setOwnerToDelete(null);
-                  }}
-                >
-                  No
-                </button>
-              </div>
-            ) : (
-              <button
-                className="mt-4 px-4 py-2 bg-primary hover:bg-highlight text-white rounded-lg"
+
+      {confirmationPopup && (
+        <Popup open={true} onClose={closePopup} closeOnDocumentClick>
+          <div className="w-full text-center p-4 rounded-lg shadow-lg">
+            {popupMessage}
+            <div className="mt-4 gap-x-4 flex justify-around">
+              <Button
+                text="Yes"
+                onClick={confirmDelete}
+              />
+              <Button
+                text="No"
                 onClick={closePopup}
-              >
-                Close
-              </button>
-            )}
+              />
+            </div>
+          </div>
+        </Popup>
+      )}
+
+      {popupMessage && !confirmationPopup && (
+        <Popup open={true} onClose={closePopup} closeOnDocumentClick>
+          <div className="w-full text-center p-4 rounded-lg shadow-lg">
+            {popupMessage}
+            <Button
+              text="OK"
+              onClick={closePopup}
+            />
           </div>
         </Popup>
       )}
@@ -164,4 +166,5 @@ const filteredOwners = owners.filter((owner) =>
 };
 
 export default Owner;
+
 
