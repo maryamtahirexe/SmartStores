@@ -1,4 +1,4 @@
-//YAYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY/ // src/components/AuthCheck.js
+//HURAHHHHHHHHHHHHHHHHHHHHHHHHH  / // src/components/AuthCheck.js
 // import React, { useEffect } from 'react';
 // import { useDispatch } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
