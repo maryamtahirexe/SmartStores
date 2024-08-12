@@ -3,9 +3,9 @@ import { API } from '../../../utils/api';
 
 export const updateAdmin = createAsyncThunk(
   'admin/updateAdmin',
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ email, oldPassword, password }, { rejectWithValue }) => {
     try {
-      const response = await API.patch('/auth/update', { email, password });
+      const response = await API.patch('/auth/update', { email, oldPassword,  password });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
