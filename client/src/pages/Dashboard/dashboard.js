@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchStoresWithOwners
-} from "../../redux/slices/adminSlice/adminSlice";
+import { fetchStoresWithOwners } from "../../redux/slices/adminSlice/adminSlice";
 import Card from "../../components/card/Card";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -95,11 +93,13 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
           {filteredStores.map((store) => (
             <Card
-              key={store.id} 
-              storeId={store.id} 
-              storeName={store.storeName} 
+              key={store.id}
+              storeId={store.id}
+              storeName={store.storeName}
               storeLocation={store.storeLocation}
               owners={store.owners}
+              branches={store.branches}
+              inventories={store.inventories}
             />
           ))}
         </div>
