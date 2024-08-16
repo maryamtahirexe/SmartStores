@@ -10,10 +10,6 @@ import EditStore from './pages/Dashboard/editStore';
 import AddOwner from './pages/Owners/addOwner';
 import Profile from './pages/profile/profile';
 import UpdateEmail from './pages/profile/updateEmail';
-import InventoryForm from './pages/Inventory/InventoryForm';
-import InventoryList from './pages/Inventory/InventoryList';
-import AddBranch from './pages/Branch/AddBranch';
-import BranchList from './pages/Branch/BranchList';
 
 
 function App() {
