@@ -143,7 +143,6 @@ const ProfilePage = () => {
             Cancel
           </button>
         </div>
-
     </div>
   </div>
 );
