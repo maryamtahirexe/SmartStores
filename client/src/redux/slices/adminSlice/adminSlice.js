@@ -113,10 +113,49 @@ export const updateStore = createAsyncThunk(
   }
 );
 
+export const fetchInventories = createAsyncThunk(
+  "admin/fetchInventories",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await API.get("/inventories");
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const addInventory = createAsyncThunk(
+  "admin/addInventory",
+  async (inventoryData, { rejectWithValue }) => {
+    try {
+      const response = await API.post("/inventories", inventoryData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updateInventory = createAsyncThunk(
+  "admin/updateInventory",
+  async ({ id, ...inventoryData }, { rejectWithValue }) => {
+    try {
+      const response = await API.patch(`/inventories/${id}`, inventoryData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
     token: localStorage.getItem("token") || null,
+    inventories: [],
+    inventoriesStatus: "idle",
+    inventoriesError: null,
     error: null,
     loading: false,
     stores: [],
@@ -260,6 +299,18 @@ const adminSlice = createSlice({
       .addCase(fetchOwnersByStoreId.rejected, (state, action) => {
         state.ownersStatus = "failed";
         state.ownersError = action.error.message;
+      })
+      .addCase(fetchInventories.pending, (state) => {
+        state.inventoryStatus = "loading";
+        state.inventoryError = null;
+      })
+      .addCase(fetchInventories.fulfilled, (state, action) => {
+        state.inventoryStatus = "succeeded";
+        state.inventories = action.payload;
+      })
+      .addCase(fetchInventories.rejected, (state, action) => {
+        state.inventoryStatus = "failed";
+        state.inventoryError = action.payload.message;
       });
   },
 });

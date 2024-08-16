@@ -14,6 +14,7 @@ import UpdateEmail from './pages/profile/updateEmail';
 
 
 
+
 // function App() {
 //   return (
 //     <BrowserRouter>
@@ -41,6 +42,10 @@ function App() {
           <Route  path="/dashboard/manage-owner" element={<PrivateRoute element={<AddOwner />} />} />
           <Route  path="/dashboard/profile" element={<PrivateRoute element={<Profile/>} />} />
           <Route path="/dashboard/profile/updateEmail" element={<PrivateRoute element={<UpdateEmail />} />} />
+          <Route  path="/dashboard/manage-inventory" element={<PrivateRoute element={<InventoryForm/>} />} />
+          <Route path="/dashboard/inventory" element={<PrivateRoute element={<InventoryList/>} />} />
+          <Route path="/dashboard/branches" element={<PrivateRoute element={<BranchList/>} />} />
+          <Route path="/dashboard/manage-branch" element={<PrivateRoute element={<AddBranch/>} />} />
         </Route>
       </Routes>
     </BrowserRouter>
