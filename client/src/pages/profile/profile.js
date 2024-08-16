@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-
-import React, { useState, useEffect } from 'react';
-=======
 import React, { useState } from 'react';
->>>>>>> 40d9e8e09efcf3676a5f595f61a7330690205ee4
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateAdmin, clearMessage, clearError } from '../../redux/slices/updateSlice/updateSlice';
@@ -113,70 +108,6 @@ const ProfilePage = () => {
             </svg>
           </button>
         </div>
-<<<<<<< HEAD
-      </div>
-      <div className="mb-4">
-        <label className="block text-primary mb-2" htmlFor="oldPassword">Old Password</label>
-        <input
-          type="password"
-          id="oldPassword"
-          value={oldPassword}
-          onChange={(e) => setOldPassword(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary"
-        />
-      </div>
-      <div className="mb-6">
-        <label className="block text-primary mb-2" htmlFor="newPassword">New Password</label>
-        <input
-          type="password"
-          id="newPassword"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary"
-        />
-      </div>
-      <div className="flex justify-center space-x-7 mt-3">
-        <Button
-          text={loading ? 'Updating...' : 'Update'}
-          onClick={handleUpdate}
-          disabled={loading}
-          className="px-6 py-3"
-        />
-        <Button
-          text="Cancel"
-          onClick={() => navigate(-1)}
-          variant="secondary"
-          className="px-6 py-2"
-        />
-      </div>
-
-
-      {popupMessage && (
-        <Popup open={true} onClose={() => setPopupMessage(null)} closeOnDocumentClick>
-          <div className="w-full text-center p-4 rounded-lg shadow-lg">
-            {popupMessage}
-            <Button text="OK" onClick={() => setPopupMessage(null)} />
-          </div>
-        </Popup>
-      )}
-
-      {showConfirmation && (
-        <Popup open={true} onClose={() => setShowConfirmation(false)} closeOnDocumentClick>
-          <div className="w-full text-center p-4 rounded-lg shadow-lg">
-            <p>Are you sure you want to change your password?</p>
-            <div className="mt-4 gap-x-4 flex justify-around">
-              <Button text="Confirm" onClick={confirmUpdate} />
-              <Button text="Cancel" onClick={() => setShowConfirmation(false)} />
-            </div>
-          </div>
-        </Popup>
-      )}
-    </div>
-  );
-};
-
-export default ProfilePage;
-=======
         <div className="mb-4">
           <label className="block text-highlight mb-2" htmlFor="oldPassword">Old Password</label>
           <input
@@ -212,11 +143,9 @@ export default ProfilePage;
             Cancel
           </button>
         </div>
-      </form>
     </div>
   </div>
 );
 };
 
 export default ProfilePage;
->>>>>>> 40d9e8e09efcf3676a5f595f61a7330690205ee4

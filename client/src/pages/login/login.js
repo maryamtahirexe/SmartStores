@@ -68,7 +68,7 @@ const Login = () => {
         <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-4 lg:p-12">
           <h2 className="text-2xl text-highlight mb-6">Welcome Back!</h2>
           <form className="w-full max-w-sm" onSubmit={handleSignIn}>
-            <InputField
+            <inputField
               label="Email"
               type="email"
               id="email"
