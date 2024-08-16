@@ -9,10 +9,11 @@ import {
 
 const router = express.Router();
 
-router.post('/stores/:storeId/branches', createBranch);
-router.put("/stores/:storeId/branches/:branchId", updateBranch);
-router.delete("/stores/:storeId/branches/:branchId", deleteBranch);
-router.get("/stores/:storeId/branches/:branchId", getBranchById);
-router.get("/stores/:storeId/branches", getAllBranchesByStoreId);
+
+router.post('/create-branch', createBranch);
+router.patch("/:branchId", updateBranch); 
+router.delete("/:branchId", deleteBranch);
+router.get("/:branchId", getBranchById);
+router.get("/", getAllBranchesByStoreId);
 
 export default router;
