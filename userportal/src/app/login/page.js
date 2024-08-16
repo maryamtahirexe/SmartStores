@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import logo from "../../assets/images/logo.png";
+import logo from "@/assets/images/logo.png"
+import Image from 'next/image';
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -43,7 +44,7 @@ export default function Login() {
     <div className="bg-login-bg min-h-screen flex">
       <div className="flex flex-col lg:flex-row w-full">
         <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-4 lg:p-12">
-          <img src={logo} alt="Logo" className="w-1/3 mb-4" />
+          <Image src={logo} alt="Logo" className="w-1/3 mb-4" />
           <h1 className="text-3xl font-bold text-highlight">TEXINITY TECHNOLOGIES</h1>
         </div>
         <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-4 lg:p-12">
