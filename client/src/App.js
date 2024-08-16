@@ -10,6 +10,25 @@ import EditStore from './pages/Dashboard/editStore';
 import AddOwner from './pages/Owners/addOwner';
 import Profile from './pages/profile/profile';
 import UpdateEmail from './pages/profile/updateEmail';
+<<<<<<< HEAD
+=======
+
+
+
+
+// function App() {
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//       <Route path="/" element={<Login />} />
+//         <Route path="/dashboard" element={<Layout />}>
+//         <Route index element={<Dashboard />} />
+//         </Route>
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+>>>>>>> 40d9e8e09efcf3676a5f595f61a7330690205ee4
 
 function App() {
   return (

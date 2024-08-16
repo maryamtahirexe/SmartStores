@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 
 import React, { useState, useEffect } from 'react';
+=======
+import React, { useState } from 'react';
+>>>>>>> 40d9e8e09efcf3676a5f595f61a7330690205ee4
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateAdmin, clearMessage, clearError } from '../../redux/slices/updateSlice/updateSlice';
@@ -109,6 +113,7 @@ const ProfilePage = () => {
             </svg>
           </button>
         </div>
+<<<<<<< HEAD
       </div>
       <div className="mb-4">
         <label className="block text-primary mb-2" htmlFor="oldPassword">Old Password</label>
@@ -171,3 +176,47 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
+=======
+        <div className="mb-4">
+          <label className="block text-highlight mb-2" htmlFor="oldPassword">Old Password</label>
+          <input
+            type="password"
+            id="oldPassword"
+            value={oldPassword}
+            onChange={(e) => setOldPassword(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-highlight"
+          />
+        </div>
+        <div className="mb-6">
+          <label className="block text-highlight mb-2" htmlFor="newPassword">New Password</label>
+          <input
+            type="password"
+            id="newPassword"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-highlight"
+          />
+        </div>
+        <div className="flex justify-between">
+          <button
+            type="button"
+            onClick={handleUpdate}
+            className="bg-highlight text-white px-4 py-2 rounded-md hover:bg-highlight"
+          >
+            Update
+          </button>
+          <button
+            type="button"
+            className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+);
+};
+
+export default ProfilePage;
+>>>>>>> 40d9e8e09efcf3676a5f595f61a7330690205ee4
