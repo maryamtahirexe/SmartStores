@@ -1,19 +1,16 @@
+// app/dashboard/layout.js
 import React from 'react';
-import Sidebar from './sidebar';
-import { Outlet } from 'react-router-dom';
+import Sidebar from '@/components/sidebar/SideBar';
 
-const Layout = () => {
+export default function DashboardLayout({ children }) {
   return (
     <div className="grid grid-cols-6 min-h-screen">
       <div className="col-span-1">
         <Sidebar />
       </div>
       <main className="col-span-5 ml-6">
-        <Outlet />
+        {children}
       </main>
     </div>
   );
-};
-
-export default Layout;
-
+}

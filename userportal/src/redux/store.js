@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import ownerReducer  from './slices/ownerSlice/page.js'; 
-import cashierReducer  from './slices/cashierReducer/page.js'; 
+import ownerReducer from "../redux/slices/ownerSlice/ownerSlice";
+import cashierReducer from "../redux/slices/cashierSlice/cashierSlice";
+import userReducer from "../redux/slices/userSlice/userSlice";
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     owner: ownerReducer,
-    cashier:cashierReducer,
+    cashier: cashierReducer,
+    user: userReducer,
   },
 });
-
-export default store;
