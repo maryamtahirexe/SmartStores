@@ -1,53 +1,50 @@
+"use client"
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../redux/slices/auth/authSlice";
-import logo from "../assets/images/logo.png";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import logo from "@/assets/images/logo.png";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import Button from "../components/Button/button";
+import Button from "@/components/Button/page";
+import { logout } from "@/redux/slices/userSlice/userSlice";
 
 const Sidebar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const router = useRouter();
 
-  const handleLogout = () => {
-    setIsModalOpen(true);
-  };
+  const handleLogout = () => setIsModalOpen(true);
 
   const confirmLogout = () => {
     dispatch(logout());
-    navigate("/");
+    router.push("/");
     setIsModalOpen(false);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className="w-64 h-full bg-primary sidebar-gradient text-highlight fixed flex flex-col justify-between">
       <div className="py-6 px-3">
-        <div className="flex mb-10">
-          <img src={logo} alt="Logo" className="size-16" />
-          <Link to="/dashboard" className="text-xl mt-1">
-            Texinity Technologies
+        <div className="flex mb-10 items-center">
+          <Image src={logo} alt="Logo" className="size-16" />
+          <Link href="/ownerDashboard" passHref>
+            <span className="text-xl mt-1">Texinity Technologies</span>
           </Link>
         </div>
         <ul className="ml-4 flex flex-col text-xl">
-          <li className="mb-4 hover:text-highlightHover">
-            <Link to="/dashboard">Stores</Link>
-          </li>
-          <li className="mb-4 hover:text-highlightHover">
-            <Link to="/dashboard/owner">Owners</Link>
-          </li>
-          <li className="mb-4 hover:text-highlightHover">
-            <Link to="/dashboard/profile">Profile</Link>
-          </li>
+          {["Analytics", "Sales", "Inventory", "Cashier", "Profile"].map((item) => (
+            <li key={item} className="mb-4 hover:text-highlightHover">
+              <Link href={`/dashboard/${item.toLowerCase()}`} passHref>
+                <span>{item}</span>
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
-      <div className="p-6 flex flex-row justify-center ">
+      <div className="p-6 flex flex-row justify-center items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -55,6 +52,7 @@ const Sidebar = () => {
           strokeWidth="1.5"
           stroke="currentColor"
           className="size-6"
+          aria-label="Logout Icon"
         >
           <path
             strokeLinecap="round"
@@ -62,21 +60,16 @@ const Sidebar = () => {
             d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25"
           />
         </svg>
-
         <button
           onClick={handleLogout}
-          className="text-highlight hover:text-highlightHover"
+          className="text-highlight hover:text-highlightHover ml-2"
+          aria-label="Logout Button"
         >
           Logout
         </button>
       </div>
-{isModalOpen && (
-        <Popup
-          open={true}
-          closeOnDocumentClick
-          onClose={closeModal}
-          modal
-        >
+      {isModalOpen && (
+        <Popup open={true} closeOnDocumentClick onClose={closeModal} modal>
           <div className="w-full p-6 text-center rounded-lg shadow-lg text-white">
             <p className="text-primary mb-4">
               Are you sure you want to logout? You will be redirected to the home page.
@@ -101,5 +94,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
-
