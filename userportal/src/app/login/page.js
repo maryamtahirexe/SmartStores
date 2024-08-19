@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import InputField from '@/components/inputField/page';
 import logo from "@/assets/images/logo.png"
-import { setEmail, setPassword, setRole, loginUser, logout, selectUser } from "@/redux/slices/userSlice/userSlice"; // Adjust the import path
+import { setEmail, setPassword, setRole, logout, selectUser } from "@/redux/slices/userSlice/userSlice"; // Adjust the import path
+import { loginOwner } from '@/redux/slices/ownerSlice/ownerSlice';
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -26,8 +27,24 @@ export default function Login() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await dispatch(loginUser({ email, password, role }));
+  
+    if (role === "owner") {
+      console.log("role ?", role)
+      const result = await dispatch(loginOwner({ email, password }));
+      if (loginOwner.fulfilled.match(result)) {
+        console.log("Owner login successful");
+        router.push('/stores'); // Navigate to the /stores page
+      } else {
+        console.log("Owner login failed");
+      }
+    } else if (role === "cashier") {
+      // await dispatch(loginCashier({ email, password}));
+      console.log("Cashier login");
+    }
+
+    
   };
+  
 
   useEffect(() => {
     if (redirectTo) {
@@ -37,7 +54,7 @@ export default function Login() {
   }, [redirectTo, router, dispatch]);
 
   return (
-    <div className="bg-login-bg min-h-screen flex ">
+    <div className="bg-login-bg min-h-screen flex bg-primary ">
       <div className="flex flex-col lg:flex-row w-full">
         <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-4 lg:p-12">
           <Image src={logo} alt="Logo" className="w-1/3 mb-4" />

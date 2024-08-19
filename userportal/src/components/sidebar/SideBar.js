@@ -37,7 +37,7 @@ const Sidebar = () => {
         <ul className="ml-4 flex flex-col text-xl">
           {["Analytics", "Sales", "Inventory", "Cashier", "Profile"].map((item) => (
             <li key={item} className="mb-4 hover:text-highlightHover">
-              <Link href={`/dashboard/${item.toLowerCase()}`} passHref>
+              <Link href={`/${item.toLowerCase()}`} passHref>
                 <span>{item}</span>
               </Link>
             </li>
