@@ -54,9 +54,9 @@ export const updateAdmin = async (req, res) => {
     }
 
     // Update password if provided
-    if (newPassword) {
+    if (password) {
       // Hash the new password
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      const hashedPassword = await bcrypt.hash(password, 10);
       admin.password = hashedPassword;
     }
 

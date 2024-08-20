@@ -136,7 +136,7 @@ const Card = ({ storeId, storeName, storeLocation, owners,  branches, inventorie
             {inventories.map((inventory) => (
               <li key={inventory.id} className="mb-1 text-base">
                 <p>
-                  {inventory.name} - Quantity: {inventory.quantity}
+                  {inventory.name}
                 </p>
               </li>
             ))}

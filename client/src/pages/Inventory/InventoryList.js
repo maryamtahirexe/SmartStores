@@ -87,9 +87,7 @@ const InventoryList = () => {
           <thead>
             <tr className="text-left border-b">
               <th className="p-4">Name</th>
-              <th className="p-4">Quantity</th>
               <th className="p-4">Description</th>
-              <th className="p-4">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -109,7 +107,6 @@ const InventoryList = () => {
               filteredInventories.map((inventory) => (
                 <tr key={inventory._id}>
                   <td className="p-4">{inventory.name}</td>
-                  <td className="p-4">{inventory.quantity}</td>
                   <td className="p-4">{inventory.description}</td>
                   <td className="p-4">
                   <div className="flex space-x-2">

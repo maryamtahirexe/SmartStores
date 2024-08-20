@@ -6,11 +6,12 @@ import {
   getStoreById,
   getAllStores,
   deleteStore,
-  getStoresWithOwners
+  getStoresWithOwners,
+  createBranch
 } from '../controllers/storeController.js';
 
 const router = express.Router();
-
+router.post('/:storeId/branches', createBranch);
 router.get('/with-owners', getStoresWithOwners);
 router.post('/stores', auth, createStore);
 router.patch('/:id', auth, updateStore);

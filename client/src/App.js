@@ -9,24 +9,12 @@ import AddStore from './pages/Dashboard/addStore';
 import EditStore from './pages/Dashboard/editStore';
 import AddOwner from './pages/Owners/addOwner';
 import Profile from './pages/profile/profile';
-import UpdateEmail from './pages/profile/updateEmail';
-
-
-
-
-
-// function App() {
-//   return (
-//     <BrowserRouter>
-//       <Routes>
-//       <Route path="/" element={<Login />} />
-//         <Route path="/dashboard" element={<Layout />}>
-//         <Route index element={<Dashboard />} />
-//         </Route>
-//       </Routes>
-//     </BrowserRouter>
-//   );
-// }
+import UpdateEmailPage from './pages/profile/updateEmail';
+import InventoryList from './pages/Inventory/InventoryList';
+import InventoryForm from './pages/Inventory/InventoryForm';
+import BranchList from './pages/Branch/BranchList';
+import AddBranch from './pages/Branch/AddBranch';
+import EditBranch from './pages/Branch/EditBranch';
 
 function App() {
   return (
@@ -41,11 +29,12 @@ function App() {
           <Route  path="/dashboard/edit-store/:storeId" element={<PrivateRoute element={<EditStore />} />} />
           <Route  path="/dashboard/manage-owner" element={<PrivateRoute element={<AddOwner />} />} />
           <Route  path="/dashboard/profile" element={<PrivateRoute element={<Profile/>} />} />
-          <Route path="/dashboard/profile/updateEmail" element={<PrivateRoute element={<UpdateEmail />} />} />
+          <Route path="/dashboard/profile/updateEmail" element={<PrivateRoute element={<UpdateEmailPage />} />} />
           <Route  path="/dashboard/manage-inventory" element={<PrivateRoute element={<InventoryForm/>} />} />
           <Route path="/dashboard/inventory" element={<PrivateRoute element={<InventoryList/>} />} />
           <Route path="/dashboard/branches" element={<PrivateRoute element={<BranchList/>} />} />
           <Route path="/dashboard/manage-branch" element={<PrivateRoute element={<AddBranch/>} />} />
+          <Route path="/dashboard/branches/edit/:branchId" element={<PrivateRoute element={<EditBranch/>} />} />
         </Route>
       </Routes>
     </BrowserRouter>
