@@ -8,6 +8,7 @@ import {
 } from "../../../utils/api";
 import Cookies from "js-cookie";
 
+
 export const loginAdmin = createAsyncThunk(
   "admin/loginAdmin",
   async ({ email, password }, { rejectWithValue }) => {
@@ -18,6 +19,18 @@ export const loginAdmin = createAsyncThunk(
       Cookies.set("token", token);
 
       return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const fetchStoresss = createAsyncThunk(
+  "admin/fetchStoresWithOwnersssss",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await API.get("/stores");
+      return response.data.stores;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -36,17 +49,6 @@ export const fetchStoresWithOwners = createAsyncThunk(
   }
 );
 
-export const fetchOwners = createAsyncThunk(
-  "owners/fetchOwners",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await fetchOwner();
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
 
 export const fetchStoreById = createAsyncThunk(
   "admin/fetchStoreById",
@@ -113,17 +115,9 @@ export const updateStore = createAsyncThunk(
   }
 );
 
-export const fetchInventories = createAsyncThunk(
-  "admin/fetchInventories",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await API.get("/inventories");
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
+
+
+
 
 export const addInventory = createAsyncThunk(
   "admin/addInventory",
@@ -149,6 +143,131 @@ export const updateInventory = createAsyncThunk(
   }
 );
 
+// export const fetchBranches = createAsyncThunk(
+//   "admin/fetchBranches",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const response = await API.get(`/branches/branch`);
+//       console.log("Fetched branches:", response.data); // Add this line
+//       return response.data;
+//     } catch (error) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
+export const fetchBranches = createAsyncThunk(
+  "admin/fetchBranches",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await API.get("/branches/branch");
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// export const addBranch = createAsyncThunk(
+//   "admin/addBranch",
+//   async (branchData, { rejectWithValue, dispatch }) => {
+//     try {
+//       const response = await API.post("/stores/:storeId/branches", branchData);
+//       dispatch(fetchBranches());
+//       return response.data;
+//     } catch (error) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
+
+export const addBranch = createAsyncThunk(
+  "admin/addBranch",
+  async (branchData, { rejectWithValue, dispatch }) => {
+    try {
+      // Use the actual storeId in the URL
+      const response = await API.post(`/stores/${branchData.storeId}/branches`, branchData);
+
+      dispatch(fetchBranches());
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updateBranch = createAsyncThunk(
+  "admin/updateBranch",
+  async ({ id, ...branchData }, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await API.patch(`/branches/${id}`, branchData);
+      dispatch(fetchBranches());
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// export const deleteBranch = createAsyncThunk(
+//   "admin/deleteBranch",
+//   async (branchId, { rejectWithValue, dispatch }) => {
+//     try {
+//       await API.delete(`/branches/${branchId}`);
+//       dispatch(fetchBranches());
+//       return branchId;
+//     } catch (error) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
+export const deleteBranch = createAsyncThunk(
+  "admin/deleteBranch",
+  async ({ storeId, id }, { rejectWithValue }) => {
+    try {
+      const response = await API.delete(`/branches/${id}`, { data: { storeId } });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const fetchBranchById = createAsyncThunk(
+  "admin/fetchBranchById",
+  async (branchId, { rejectWithValue }) => {
+    try {
+      const response = await API.get(`/branches/${branchId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const fetchInventories = createAsyncThunk(
+  "admin/fetchInventories",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await API.get("/inventories");
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const fetchOwners = createAsyncThunk(
+  "owners/fetchOwners",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetchOwner();
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
@@ -156,6 +275,9 @@ const adminSlice = createSlice({
     inventories: [],
     inventoriesStatus: "idle",
     inventoriesError: null,
+    branches: [], // Add branch-related state
+    branchesStatus: "idle",
+    branchesError: null,
     error: null,
     loading: false,
     stores: [],
@@ -227,7 +349,12 @@ const adminSlice = createSlice({
       })
       .addCase(fetchStoreById.fulfilled, (state, action) => {
         state.storeStatus = "succeeded";
-        state.store = action.payload;
+        // Destructure inventories from the response payload
+        const { inventories, ...rest } = action.payload;
+        state.store = {
+          ...rest,
+          inventories,
+        };
       })
       .addCase(fetchStoreById.rejected, (state, action) => {
         state.storeStatus = "failed";
@@ -301,18 +428,88 @@ const adminSlice = createSlice({
         state.ownersError = action.error.message;
       })
       .addCase(fetchInventories.pending, (state) => {
-        state.inventoryStatus = "loading";
-        state.inventoryError = null;
+        state.inventoriesStatus = 'loading';
       })
       .addCase(fetchInventories.fulfilled, (state, action) => {
-        state.inventoryStatus = "succeeded";
+        state.inventoriesStatus = 'succeeded';
         state.inventories = action.payload;
       })
       .addCase(fetchInventories.rejected, (state, action) => {
-        state.inventoryStatus = "failed";
-        state.inventoryError = action.payload.message;
+        state.inventoriesStatus = 'failed';
+        state.inventoriesError = action.error.message;
+      })
+      .addCase(fetchBranches.pending, (state) => {
+        state.branchesStatus = "loading";
+        state.branchesError = null;
+      })
+      .addCase(fetchBranches.fulfilled, (state, action) => {
+        state.branchesStatus = "succeeded";
+        state.branches = action.payload;
+      })
+      .addCase(fetchBranches.rejected, (state, action) => {
+        state.branchesStatus = "failed";
+        state.branchesError = action.payload.message;
+      })
+
+      .addCase(addBranch.pending, (state) => {
+        state.branchesStatus = "loading";
+        state.branchesError = null;
+      })
+      .addCase(addBranch.fulfilled, (state, action) => {
+        state.branchesStatus = "succeeded";
+        state.branches.push(action.payload);
+      })
+      .addCase(addBranch.rejected, (state, action) => {
+        state.branchesStatus = "failed";
+        state.branchesError = action.payload.message;
+      })
+
+      .addCase(updateBranch.pending, (state) => {
+        state.branchesStatus = "loading";
+        state.branchesError = null;
+      })
+      .addCase(updateBranch.fulfilled, (state, action) => {
+        state.branchesStatus = "succeeded";
+        const index = state.branches.findIndex(
+          (branch) => branch.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.branches[index] = action.payload;
+        }
+      })
+      .addCase(updateBranch.rejected, (state, action) => {
+        state.branchesStatus = "failed";
+        state.branchesError = action.payload.message;
+      })
+
+      .addCase(deleteBranch.pending, (state) => {
+        state.branchesStatus = "loading";
+        state.branchesError = null;
+      })
+      .addCase(deleteBranch.fulfilled, (state, action) => {
+        state.branchesStatus = "succeeded";
+        state.branches = state.branches.filter(
+          (branch) => branch.id !== action.payload
+        );
+      })
+      .addCase(deleteBranch.rejected, (state, action) => {
+        state.branchesStatus = "failed";
+        state.branchesError = action.payload.message;
+      })
+      .addCase(fetchBranchById.pending,(state)=>{
+        state.branchesStatus = "loading";
+        state.branchesError = null;
+      })
+      .addCase(fetchBranchById.fulfilled,(state, action)=>{
+        state.branchesStatus = "succeeded";
+        state.branches = action.payload;
+      })
+      .addCase(fetchBranchById.rejected,(state, action)=>{
+        state.branchesStatus = "failed";
+        state.branchesError = action.payload.message;
       });
   },
 });
 
 export default adminSlice.reducer;
+//fetchBranchById

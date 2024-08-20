@@ -1,10 +1,10 @@
 import Inventory from "../models/inventory.js";
 
 export const createInventory = async (req, res) => {
-  const { name, description  } = req.body;
+  const { name, description, products } = req.body;
 
   try {
-    const newInventory = new Inventory({ name, description });
+    const newInventory = new Inventory({ name, description, products });
     await newInventory.save();
     res.status(201).json(newInventory);
   } catch (error) {
@@ -15,12 +15,12 @@ export const createInventory = async (req, res) => {
 
 export const updateInventory = async (req, res) => {
   const { id } = req.params;
-  const { name, quantity, description } = req.body;
+  const { name, description, products } = req.body;
 
   try {
     const updatedInventory = await Inventory.findByIdAndUpdate(
       id,
-      { name, quantity, description },
+      { name, description, products },
       { new: true }
     );
 
@@ -78,7 +78,3 @@ export const getAllInventories = async (req, res) => {
     res.status(500).json({ message: "Error retrieving inventories", error: error.message });
   }
 };
-
-
-
-

@@ -100,10 +100,28 @@
 
 import User from "../models/owner.js";
 import Store from "../models/store.js";
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
+// Create a new owner (User with role: "owner")
+// export const createOwner = async (req, res) => {
+//   const { name, email, password } = req.body;
+//   try {
+//     if (!name || !email || !password) {
+//       return res
+//         .status(400)
+//         .json({ message: "Name, email, and password are required" });
+//     }
 
+//     const newUser = new User({ name, email, password, role: "owner" });
+//     await newUser.save();
+//     res.status(201).json(newUser);
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ message: "Failed to create owner", error: error.message });
+//   }
+// };
 export const loginOwner = async (req, res) => {
   const { email, password } = req.body;
 
@@ -150,70 +168,6 @@ export const loginOwner = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
-
-// export const loginOwner = async (req, res) => {
-//   const { email, password } = req.body;
-
-//   try {
-//     // Find user by email
-//     const owner = await User.findOne({ email });
-
-//     if (!owner || owner.role !== 'owner') {
-//       return res.status(400).json({ message: 'Email is incorrect or user is not an owner' });
-//     }
-
-//     // Compare password
-//     const isPasswordValid = await bcrypt.compare(password, owner.password);
-
-//     if (!isPasswordValid) {
-//       return res.status(401).json({ message: 'Invalid credentials' });
-//     }
-
-//     // Generate JWT token
-//     const token = jwt.sign({ id: owner._id }, process.env.JWT_SECRET, {
-//       expiresIn: '1h',
-//     });
-
-//     // Respond with the token
-//     res.cookie('token', token, {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === 'production',
-//       maxAge: 3600000, // 1 hour
-//     });
-
-//     res.status(200).json({
-//       token,
-//       user: {
-//         id: owner._id,
-//         name: owner.name,
-//         email: owner.email,
-//       },
-//     });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Server error', error: error.message });
-//   }
-// };
-
-// Create a new owner (User with role: "owner")
-// export const createOwner = async (req, res) => {
-//   const { name, email, password } = req.body;
-//   try {
-//     if (!name || !email || !password) {
-//       return res
-//         .status(400)
-//         .json({ message: "Name, email, and password are required" });
-//     }
-
-//     const newUser = new User({ name, email, password, role: "owner" });
-//     await newUser.save();
-//     res.status(201).json(newUser);
-//   } catch (error) {
-//     res
-//       .status(500)
-//       .json({ message: "Failed to create owner", error: error.message });
-//   }
-// };
-
 
 export const createOwner = async (req, res) => {
   const { name, email, password } = req.body;

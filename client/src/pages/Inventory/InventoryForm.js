@@ -79,14 +79,14 @@ const InventoryForm = () => {
             value={formData.name}
             onChange={handleChange}
           />
-          <InputField
+          {/* <InputField
             label="Quantity"
             name="quantity"
             id="quantity"
             placeholder="Enter inventory quantity"
             value={formData.quantity}
             onChange={handleChange}
-          />
+          /> */}
           <InputField
             label="Description"
             name="description"

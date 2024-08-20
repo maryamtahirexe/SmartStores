@@ -473,7 +473,11 @@ import mongoose from "mongoose";
 
 // Create a new store
 export const createStore = async (req, res) => {
-  const { name, location, owners, branches, inventoryIds } = req.body;
+  const { name, location, owners, branches=[], inventoryIds=[] } = req.body;
+
+  console.log("Request Body:", req.body);
+  console.log("Branches:", branches);
+  console.log("Inventory IDs:", inventoryIds);
 
   console.log("Request Body:", req.body);
 
@@ -496,15 +500,22 @@ export const createStore = async (req, res) => {
       return res.status(400).json({ message: "One or more owners not found" });
     }
 
-    // Validate inventory IDs
-    const inventories = await Inventory.find({ _id: { $in: inventoryIds } });
-    if (inventories.length !== inventoryIds.length) {
-      return res.status(400).json({ message: "One or more inventories not found" });
+    if (!Array.isArray(branches)) {
+      return res.status(400).json({ message: "Branches must be an array" });
     }
-
-    const branchesFound = await Branch.find({ _id: { $in: branches } });
-    if (branchesFound.length !== branches.length) {
-      return res.status(400).json({ message: "One or more branch IDs not found" });
+    
+    // Validate inventory IDs
+    if(inventoryIds.length>0){
+      const inventories = await Inventory.find({ _id: { $in: inventoryIds } });
+      if (inventories.length !== inventoryIds.length) {
+        return res.status(400).json({ message: "One or more inventories not found" });
+      }
+    }
+    if (branches.length > 0) {
+      const branchesFound = await Branch.find({ _id: { $in: branches } });
+      if (branchesFound.length !== branches.length) {
+        return res.status(400).json({ message: "One or more branch IDs not found" });
+      }
     }
 
     // Create the new store with branches and inventories
@@ -513,7 +524,7 @@ export const createStore = async (req, res) => {
       location,
       owners,
       branches,
-      inventories: inventoryIds,
+      inventories:req.body.inventories,
     });
     await newStore.save();
 
@@ -528,7 +539,9 @@ export const createStore = async (req, res) => {
 
 export const updateStore = async (req, res) => {
   const { id } = req.params;
-  const { name, location, ownerIds, branches, inventoryIds } = req.body;
+  const { name, location, ownerIds, branches=[], inventoryIds } = req.body;
+
+  console.log(req.body);
 
   try {
     if (!Array.isArray(ownerIds)) {
@@ -654,6 +667,65 @@ export const getStoresWithOwners = async (req, res) => {
       message: "Failed to fetch stores and their associated data",
       error: error.message,
     });
+  }
+};
+
+// export const createBranch = async (req, res) => {
+//   const {name, location, storeIds } = req.body;
+// console.log("heheheh",storeIds)
+//   console.log("lalalal",req.body);
+//   try {
+//     // Check if the store exists
+//     const store = await Store.findById(storeId);
+//     console.log("hello");
+//     if (!store) {
+//       return res.status(404).json({ message: 'Store not found' });
+//     }
+
+//     // Create the branch
+//     const newBranch = await Branch.create({ name, location, store: storeId });
+//     console.log("hello2");
+//     // Add the branch to the store
+//     store.branches.push(newBranch._id);
+//     await store.save();
+
+//     res.status(201).json(newBranch);
+//   } catch (error) {
+//     res.status(500).json({ message: 'Error creating branch', error });
+//   }
+// };
+export const createBranch = async (req, res) => {
+  const { name, location, storeIds } = req.body;
+
+  console.log("heheheh", storeIds);
+  console.log("lalalal", req.body);
+
+  try {
+    if (!storeIds || storeIds.length === 0) {
+      return res.status(400).json({ message: 'Store ID is required' });
+    }
+
+    // Use the first store ID from the array
+    const storeId = storeIds[0];
+
+    // Check if the store exists
+    const store = await Store.findById(storeId);
+    console.log("hello");
+    if (!store) {
+      return res.status(404).json({ message: 'Store not found' });
+    }
+
+    // Create the branch
+    const newBranch = await Branch.create({ name, location, store: storeId });
+    console.log("hello2");
+
+    // Add the branch to the store
+    store.branches.push(newBranch._id);
+    await store.save();
+
+    res.status(201).json(newBranch);
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating branch', error });
   }
 };
 // export const getStoresWithOwners = async (req, res) => {
