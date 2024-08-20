@@ -1,6 +1,27 @@
+// import mongoose from "mongoose";
+
+// const ownerSchema = new mongoose.Schema({
+//   name: {
+//     type: String,
+//     required: true,
+//   },
+//   email: {
+//     type: String,
+//     required: true,
+//     unique: true,
+//   },
+//   password: {
+//     type: String
+//   },
+// });
+
+// const Owner = mongoose.model("Owner", ownerSchema);
+
+// export default Owner;
+
 import mongoose from "mongoose";
 
-const ownerSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -11,10 +32,15 @@ const ownerSchema = new mongoose.Schema({
     unique: true,
   },
   password: {
-    type: String
+    type: String,
+  },
+  role: {
+    type: String,
+    enum: ["owner", "cashier"], // Roles can be extended as needed
+    required: true,
   },
 });
 
-const Owner = mongoose.model("Owner", ownerSchema);
+const User = mongoose.model("User", userSchema);
+export default User;
 
-export default Owner;

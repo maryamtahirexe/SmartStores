@@ -6,7 +6,7 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import Button from "../Button/button";
 
-const Card = ({ storeId, storeName, storeLocation, owners }) => {
+const Card = ({ storeId, storeName, storeLocation, owners,  branches, inventories, }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [confirmationPopup, setConfirmationPopup] = useState(false);
@@ -108,6 +108,39 @@ const Card = ({ storeId, storeName, storeLocation, owners }) => {
             </li>
           ))}
         </ul>
+        )}
+      </div>
+      <div className="mt-4">
+        <h3 className="font-semibold text-lg text-primary">Branches:</h3>
+        {branches.length === 0 ? (
+          <p className="text-accent">None</p>
+        ) : (
+          <ul className="text-accent list-none">
+            {branches.map((branch) => (
+              <li key={branch.id} className="mb-1 text-base">
+                <p>
+                  {branch.name} - {branch.location}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div className="mt-4">
+        <h3 className="font-semibold text-lg text-primary">Inventories:</h3>
+        {inventories.length === 0 ? (
+          <p className="text-accent">None</p>
+        ) : (
+          <ul className="text-accent list-none">
+            {inventories.map((inventory) => (
+              <li key={inventory.id} className="mb-1 text-base">
+                <p>
+                  {inventory.name}
+                </p>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
 

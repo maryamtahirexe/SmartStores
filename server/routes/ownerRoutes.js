@@ -5,15 +5,16 @@ import {
   getOwners,
   deleteOwner,
   updateOwner,
-  getOwnersByStoreId
+  getOwnersByStoreId,
+  loginOwner
 } from '../controllers/ownerController.js';
 
 const router = express.Router();
 
-router.post('/', auth, createOwner);
+router.post('/', createOwner);
 router.get('/', getOwners);
 router.delete('/:id', auth, deleteOwner);
 router.patch('/:id', auth, updateOwner);
 router.get('/:id', getOwnersByStoreId);
-
+router.post('/login', loginOwner);
 export default router;

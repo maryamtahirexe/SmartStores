@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import storeRouter from "./routes/storeRoutes.js";
 import ownerRouter from "./routes/ownerRoutes.js";
 import authRouter from "./routes/authRoutes.js";
+import inventoryRouter from "./routes/inventroyRoute.js";  
+import branchRouter from "./routes/branchRoute.js";  
 import cookieParser from "cookie-parser";
 import Admin from "./models/admin.js";
 import bcrypt from "bcrypt";
@@ -26,6 +28,8 @@ app.use(
 app.use("/auth", authRouter);
 app.use("/stores", storeRouter);
 app.use("/owner", ownerRouter);
+app.use("/inventories", inventoryRouter);  
+app.use("/branches", branchRouter); 
 
 
 const CONNECTION_URL = process.env.CONNECTION_URL;
