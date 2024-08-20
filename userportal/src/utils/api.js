@@ -13,6 +13,8 @@ export const API = axios.create({
 export const loginOwnerAPI = ({ email, password}) => API.post('/owner/login', { email, password });
 export const addProductAPI = (productData) => API.post('/inventory', productData);
 export const fetchStoreAPI = () => API.get('/stores');
+export const updateAdmin =()=> API.patch('/auth/update', { email, oldPassword,  password });
+
 
 API.interceptors.request.use((config) => {
   const token = Cookies.get('token') || localStorage.getItem('token');
