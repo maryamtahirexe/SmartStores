@@ -162,7 +162,7 @@ export default function Store() {
             <li key={store._id} className="mb-2">
               <button 
                 className="text-blue-500 hover:underline"
-                onClick={() => router.push(`/stores/${store._id}`)}
+                onClick={() => router.push(`/stores/${store._id}/owner-dashboard/analytics`)}
               >
                 {store.name}
               </button>
