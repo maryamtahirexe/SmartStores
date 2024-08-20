@@ -10,7 +10,7 @@ import "reactjs-popup/dist/index.css";
 import Button from "@/components/Button/page";
 import { logout } from "@/redux/slices/userSlice/userSlice";
 
-const Sidebar = () => {
+const Sidebar = ({ storeId }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -37,7 +37,7 @@ const Sidebar = () => {
         <ul className="ml-4 flex flex-col text-xl">
           {["Analytics", "Sales", "Inventory", "Cashier", "Profile"].map((item) => (
             <li key={item} className="mb-4 hover:text-highlightHover">
-              <Link href={`/${item.toLowerCase()}`} passHref>
+              <Link href={`${item.toLowerCase()}`} passHref>
                 <span>{item}</span>
               </Link>
             </li>
