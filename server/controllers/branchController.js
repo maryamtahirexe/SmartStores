@@ -174,46 +174,72 @@ export const createBranch = async (req, res) => {
   //   }
   // };
   
-
-  //perfect hai but testing k liye change kr rahi
-export const updateBranch = async (req, res) => {
-  const { storeId, name, location } = req.body;
-  const { branchId } = req.params;
-
-  try {
-      const store = await Store.findById(storeId);
-      if (!store) {
-          return res.status(404).json({ message: "Store not found" });
+  export const updateBranch = async (req, res) => {
+    const { branchId } = req.params;
+    console.log("Received branchId:", branchId);
+  
+    if (!mongoose.Types.ObjectId.isValid(branchId)) {
+      return res.status(400).json({ message: "Invalid branchId format" });
+    }
+  
+    const { storeId, name, location } = req.body;
+  
+    try {
+      const updatedBranch = await Branch.findByIdAndUpdate(
+        branchId,
+        { name, location, store: storeId },
+        { new: true }
+      );
+  
+      if (!updatedBranch) {
+        return res.status(404).json({ message: "Branch not found" });
       }
-
-      
-      let branch = await Branch.findById(branchId);
-      console.log("check1 branch?", branch);
-      
-      if (branch) {
-          if (!store.branches.includes(branchId)) {
-              return res.status(400).json({ message: "Branch does not belong to this store" });
-          }
-
-          branch.name = name;
-          branch.location = location;
-          await branch.save(); 
-
-          return res.status(200).json(branch);
-      } else {
-          branch = await Store.findById(branchId);
-          console.log("branch?", branch);
-          if (branch) {
-              return res.status(400).json({ message: "ID refers to a store, not a branch. You can update the store if you want." });
-          }
-
-          return res.status(404).json({ message: "Branch not found?" });
-      }
-  } catch (error) {
+  
+      res.status(200).json(updatedBranch);
+    } catch (error) {
       console.error("Error updating branch:", error);
       res.status(500).json({ message: "Error updating branch", error: error.message });
-  }
-};
+    }
+  };
+  //perfect hai but testing k liye change kr rahi
+// export const updateBranch = async (req, res) => {
+//   const { storeId, name, location } = req.body;
+//   const { branchId } = req.params;
+
+//   try {
+//       const store = await Store.findById(storeId);
+//       if (!store) {
+//           return res.status(404).json({ message: "Store not found" });
+//       }
+
+      
+//       let branch = await Branch.findById(branchId);
+//       console.log("check1 branch?", branch);
+      
+//       if (branch) {
+//           if (!store.branches.includes(branchId)) {
+//               return res.status(400).json({ message: "Branch does not belong to this store" });
+//           }
+
+//           branch.name = name;
+//           branch.location = location;
+//           await branch.save(); 
+
+//           return res.status(200).json(branch);
+//       } else {
+//           branch = await Store.findById(branchId);
+//           console.log("branch?", branch);
+//           if (branch) {
+//               return res.status(400).json({ message: "ID refers to a store, not a branch. You can update the store if you want." });
+//           }
+
+//           return res.status(404).json({ message: "Branch not found?" });
+//       }
+//   } catch (error) {
+//       console.error("Error updating branch:", error);
+//       res.status(500).json({ message: "Error updating branch", error: error.message });
+//   }
+// };
 
 
 
