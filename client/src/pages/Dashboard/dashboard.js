@@ -10,6 +10,7 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import Button from "../../components/Button/button";
 
+//few errors 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");

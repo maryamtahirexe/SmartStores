@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import InputField from '@/components/inputField/page';
 import logo from "@/assets/images/logo.png"
-import { setEmail, setPassword, setRole, logout, selectUser } from "@/redux/slices/userSlice/userSlice"; // Adjust the import path
+import { setEmail, setPassword, setRole, logout, selectUser } from "@/redux/slices/userSlice/userSlice"; 
 import { loginOwner } from '@/redux/slices/ownerSlice/ownerSlice';
 
 export default function Login() {
@@ -33,12 +33,12 @@ export default function Login() {
       const result = await dispatch(loginOwner({ email, password }));
       if (loginOwner.fulfilled.match(result)) {
         console.log("Owner login successful");
-        router.push('/stores'); // Navigate to the /stores page
+        router.push('/stores'); 
       } else {
         console.log("Owner login failed");
       }
     } else if (role === "cashier") {
-      // await dispatch(loginCashier({ email, password}));
+      
       console.log("Cashier login");
     }
 

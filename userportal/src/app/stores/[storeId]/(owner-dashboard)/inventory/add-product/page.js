@@ -24,7 +24,7 @@ const AddProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addProduct(productData)); // Dispatch the action to add the product
+    dispatch(addProduct(productData)); 
   };
 
   return (

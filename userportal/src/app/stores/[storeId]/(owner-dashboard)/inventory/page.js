@@ -46,7 +46,7 @@ export default function Inventory() {
   const [storeId, setStoreId] = useState(null);
 
   useEffect(() => {
-    // Extract storeId from the pathname
+   
     const match = pathname.match(/stores\/([^/]+)\//);
     if (match) {
       const extractedStoreId = match[1];
@@ -62,7 +62,7 @@ export default function Inventory() {
     }
   };
 
-  if (!storeId) return <div>Loading...</div>; // Optionally show a loading state
+  if (!storeId) return <div>Loading...</div>; 
 
   return (
         <div className="p-6">
@@ -71,13 +71,11 @@ export default function Inventory() {
             <Button text="Add Product" onClick={handleAddProduct} />
           </div>
           <div className="flex flex-col space-y-4">
-            {/* This is where you would map over product data and display it */}
             <div className="flex justify-between p-4 border border-gray-300 rounded-lg">
               <span>Product Name</span>
               <span>$ Price</span>
               <span>Category</span>
             </div>
-            {/* Repeat for each product */}
           </div>
         </div>
       );

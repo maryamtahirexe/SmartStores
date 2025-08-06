@@ -81,7 +81,6 @@ export default function DashboardLayout({ children }) {
   const [storeId, setStoreId] = useState(null);
 
   useEffect(() => {
-    // Extract storeId from the pathname
     const match = pathname.match(/stores\/([^/]+)\//);
     if (match) {
       const extractedStoreId = match[1];
@@ -90,7 +89,7 @@ export default function DashboardLayout({ children }) {
     }
   }, [pathname]);
 
-  if (!storeId) return <div>Loading...</div>; // Optionally show a loading state
+  if (!storeId) return <div>Loading...</div>; 
 
   return (
     <div className="grid grid-cols-6 min-h-screen">

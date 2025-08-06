@@ -6,7 +6,7 @@ import WeeklyOrdersAndProfitsChart from '@/components/Charts/composedGraph/compo
 import StorePerformanceChart from '@/components/Charts/radialBarGraph/radialBarGraph';
 
 const Analytics = () => {
-  // Dummy data
+  
   const dummyData = {
     activeStores: 5,
     activeOwners: 3,
