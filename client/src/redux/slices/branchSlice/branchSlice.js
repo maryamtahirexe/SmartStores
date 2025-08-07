@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Base URL for your API
-const API_URL = "http://localhost:5000/branches";
+const API_URL = "https://fipbackend-production.up.railway.app/branches";
 
 // Thunks for async operations
 export const fetchBranches = createAsyncThunk(

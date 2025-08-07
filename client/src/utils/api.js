@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 export const API = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: 'https://fipbackend-production.up.railway.app/',
   withCredentials: true, 
   headers: {
     'Content-Type': 'application/json',
